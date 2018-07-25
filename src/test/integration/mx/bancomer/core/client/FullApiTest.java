@@ -16,7 +16,9 @@
 package mx.bancomer.core.client;
 
 import lombok.extern.slf4j.Slf4j;
+import mx.bancomer.client.Address;
 import mx.bancomer.client.Charge;
+import mx.bancomer.client.Customer;
 import mx.bancomer.client.Token;
 import mx.bancomer.client.core.BancomerAPI;
 import mx.bancomer.client.core.requests.parameters.Parameter;
@@ -33,6 +35,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -76,19 +79,57 @@ public class FullApiTest {
 
     @Test
     public void testFullApi() throws Exception {
-        this.testCardCharges();
+        this.testCharges();
         this.testChargeGet();
         this.testTokens();
     }
 
-    private void testCardCharges() throws ServiceException, ServiceUnavailableException {
+    private void testCharges() throws ServiceException, ServiceUnavailableException {
         this.testChargeMerchantStore();
         this.testChargeMerchantCardCaptureRefund();
+        this.testChargeCustomerDirectCaptureRefund();
+    }
+
+    // POST
+    // /v1/{merchantId}/customers/{customerId}/charges/{transactionId}/refund
+    private void testChargeCustomerDirectCaptureRefund() throws ServiceException,
+            ServiceUnavailableException {
+        Customer custom = api.customers().create(new Customer()
+                .name("John").lastName("Doe")
+                .email("john.doe@mail.com")
+                .address(new Address()
+                        .line1("Av nueva")
+                        .city("Queretaro")
+                        .state("Queretaro")
+                        .countryCode("MX")
+                        .postalCode("12789")
+                ));
+        List<Parameter> request = new ArrayList<Parameter>(Arrays.asList(
+                new SingleParameter("affiliation_bbva", "720931"),
+                new SingleParameter("amount", "200.00"),
+                new SingleParameter("description", "Test Charge"),
+                new SingleParameter("customer_language", ""),
+                new SingleParameter("capture", "FALSE"),
+                new SingleParameter("use_3d_secure", "FALSE"),
+                new SingleParameter("use_card_points", "NONE"),
+                new SingleParameter("token", this.token.getId()),
+                new SingleParameter("currency", "MXN"),
+                new SingleParameter("order_id", "oid-00091")
+        ));
+        Charge charge = this.api.charges().create(custom.getId(), request);
+        log.info("Customer direct card charge: {}", charge.getId());
+
+        charge = this.api.charges().confirmCapture(custom.getId(), new ConfirmCaptureParams()
+                        .amount(new BigDecimal("200.00")).chargeId(charge.getId()));
+        log.info("Customer direct card charge confirmed: {}", charge.getId());
+
+        charge = this.api.charges().refund(custom.getId(), new RefundParams().chargeId(charge.getId()));
+        log.info("Customer card charge refunded: {}", charge.getRefund().getId());
     }
 
     // POST /v1/{merchantId}/charges/{transactionId}/refund
     private void testChargeMerchantCardCaptureRefund() throws ServiceException, ServiceUnavailableException {
-        this.merchantCharge = this.api.charges().createCharge(new ArrayList<Parameter>(Arrays.asList(
+        this.merchantCharge = this.api.charges().create(new ArrayList<Parameter>(Arrays.asList(
                         new SingleParameter("affiliation_bbva", "720931"),
                         new SingleParameter("amount", "200.00"),
                         new SingleParameter("description", "Test Charge"),
@@ -113,7 +154,7 @@ public class FullApiTest {
 
     // POST /v1/{merchantId}/charges
     private void testChargeMerchantStore() throws ServiceException, ServiceUnavailableException {
-        this.merchantCharge = this.api.charges().createCharge(new ArrayList<Parameter>(Arrays.asList(
+        this.merchantCharge = this.api.charges().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("affiliation_bbva", "720931"),
                 new SingleParameter("amount", "200.00"),
                 new SingleParameter("description", "Test Charge"),
