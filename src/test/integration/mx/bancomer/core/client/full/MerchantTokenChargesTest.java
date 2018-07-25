@@ -26,7 +26,6 @@ import mx.bancomer.client.core.requests.transactions.ConfirmCaptureParams;
 import mx.bancomer.client.core.requests.transactions.RefundParams;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -106,7 +105,7 @@ public class MerchantTokenChargesTest extends BaseTest {
         String desc = "Pago de taxi";
         String orderId = String.valueOf(System.currentTimeMillis());
 
-        Charge transaction = api.charges().createCharge(Arrays.asList(
+        Charge transaction = api.charges().create(Arrays.asList(
                 new SingleParameter("affiliation_bbva", "720931"),
                 new SingleParameter("amount", "10.00"),
                 new SingleParameter("description", desc),
@@ -177,7 +176,7 @@ public class MerchantTokenChargesTest extends BaseTest {
 
         ));
         tokenChargeParams.add(this.customer);
-        return api.charges().createCharge(tokenChargeParams);
+        return api.charges().create(tokenChargeParams);
     }
 
 }
