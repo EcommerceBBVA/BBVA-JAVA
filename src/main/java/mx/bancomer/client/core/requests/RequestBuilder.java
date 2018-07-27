@@ -50,7 +50,7 @@ public abstract class RequestBuilder {
 
     /**
      * Returns an unmodifiable map containing the builder's parameters.
-     * @return
+     * @return this same object
      */
     public Map<String, Object> asMap() {
         return Collections.unmodifiableMap(this.parameters);

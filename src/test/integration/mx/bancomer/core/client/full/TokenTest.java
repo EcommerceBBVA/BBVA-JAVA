@@ -25,12 +25,14 @@
 package mx.bancomer.core.client.full;
 
 import lombok.extern.slf4j.Slf4j;
+import mx.bancomer.client.Customer;
 import mx.bancomer.client.Token;
 import mx.bancomer.client.core.BancomerAPI;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.SingleParameter;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,13 +58,25 @@ public class TokenTest {
 
     private String tokenId;
 
+    private Customer customer;
+
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         String merchantId = "miklpzr4nsvsucghm2qp";
         String apiKey = "sk_08453429e4c54220a3a82ab4d974c31a";
         String endpoint = "https://dev-api.openpay.mx/";
         this.api = new BancomerAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
+        this.customer = this.api.customers().create(
+                new Customer().name("John").lastName("Doe").email("john@mail.com").phoneNumber("55-25634013")
+        );
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        if (this.customer != null) {
+            this.api.customers().delete(this.customer.getId());
+        }
     }
 
     @Test
@@ -85,6 +99,7 @@ public class TokenTest {
         )));
 
         log.info(token.toString());
+        Assert.assertNotNull(token.getId());
         this.tokenId = token.getId();
     }
 

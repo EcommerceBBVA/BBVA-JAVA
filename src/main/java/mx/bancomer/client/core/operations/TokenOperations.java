@@ -23,16 +23,16 @@
  *
  */
 package mx.bancomer.client.core.operations;
-
 import mx.bancomer.client.Token;
 import mx.bancomer.client.core.JsonServiceClient;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterBuilder;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
-import mx.bancomer.client.utils.PathComponents;
 
 import java.util.List;
+
+import static mx.bancomer.client.utils.PathComponents.*;
 
 
 /**
@@ -45,9 +45,9 @@ import java.util.List;
  */
 public class TokenOperations extends ServiceOperations {
 
-	private static final String BASE_PATH = PathComponents.MERCHANT_ID + PathComponents.TOKENS;
+	private static final String BASE_PATH = MERCHANT_ID + TOKENS;
 
-	private static final String GET_PATH = BASE_PATH + PathComponents.TOKEN_ID;
+	private static final String GET_PATH = BASE_PATH + TOKEN_ID;
 
 	private ParameterBuilder parameterBuilder = new ParameterBuilder();
 
@@ -56,7 +56,7 @@ public class TokenOperations extends ServiceOperations {
     }
 
 	/**
-	 * <p>Método que permite crear un token en la plataforma Openpay</p>
+	 * <p>Método que permite crear un token en la plataforma</p>
 	 * @param params Objeto contenedor de la información para la creación del token
 	 * @return Regresa el mismo objeto Token, pero con el id y tarjeta
 	 */

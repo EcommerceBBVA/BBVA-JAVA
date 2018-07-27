@@ -72,11 +72,10 @@ public class ChargeOperations extends ServiceOperations {
     /**
      * Creates any kind of charge at the Customer level.
      * @param customerId ID of the Customer created previously in Openpay.
-     * @param request Generic request params.
+     * @param params Generic request params.
      * @return Charge data returned by Openpay
      * @throws ServiceException When Openpay returns an error response
-     * @throws ServiceUnavailableException When an unexpected communication error occurs.
-     * @since 1.0.10
+     * @throws ServiceUnavailableException When an unexpected communication error occurs
      */
     public Charge create(final String customerId, List<Parameter> params)
             throws ServiceException, ServiceUnavailableException {

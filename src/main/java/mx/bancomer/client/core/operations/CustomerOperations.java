@@ -24,6 +24,8 @@ import java.util.Map;
 
 import mx.bancomer.client.Customer;
 import mx.bancomer.client.core.JsonServiceClient;
+import mx.bancomer.client.core.requests.parameters.Parameter;
+import mx.bancomer.client.core.requests.parameters.ParameterBuilder;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import mx.bancomer.client.utils.SearchParams;
@@ -38,6 +40,8 @@ public class CustomerOperations extends ServiceOperations {
 
     private static final String GET_CUSTOMER_PATH = CUSTOMERS_PATH + ID;
 
+    private ParameterBuilder parameterBuilder = new ParameterBuilder();
+
     public CustomerOperations(final JsonServiceClient client) {
         super(client);
     }
@@ -46,6 +50,12 @@ public class CustomerOperations extends ServiceOperations {
             ServiceUnavailableException {
         String path = String.format(CUSTOMERS_PATH, this.getMerchantId());
         return this.getJsonClient().post(path, create, Customer.class);
+    }
+
+    public Customer create(final List<Parameter> params) throws ServiceException,
+            ServiceUnavailableException {
+        String path = String.format(CUSTOMERS_PATH, this.getMerchantId());
+        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), Customer.class);
     }
 
     public List<Customer> list(final SearchParams params) throws ServiceException,
