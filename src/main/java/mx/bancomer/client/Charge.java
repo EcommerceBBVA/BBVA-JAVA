@@ -35,7 +35,7 @@ public class Charge extends Transaction {
 
     @SerializedName("card_points")
     private CardPoints cardPoints;
-    
+
     @SerializedName("risk_data")
     private RiskData riskData;
 

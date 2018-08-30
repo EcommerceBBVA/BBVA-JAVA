@@ -27,6 +27,7 @@ import java.util.*;
 /**
  * ISO 8601 date parsing utility. <br>
  * Designed for parsing the ISO subset used in Dublin Core, RSS 1.0, and Atom.
+ *
  * @author <a href="mailto:burton@apache.org">Kevin A. Burton (burtonator)</a>
  * @version $Id: ISO8601DateParser.java 373572 2006-01-30 19:28:41Z mvdb $
  */
@@ -116,6 +117,7 @@ public class ISO8601DateParser {
 
     /**
      * Format a date into 'yyyy-MM-ddThh:mm:ss[.sss]Z' (GMT timezone)
+     *
      * @param date the date to format
      * @return the date formatted as 'yyyy-MM-ddThh:mm:ss[.sss]Z'
      */
@@ -125,9 +127,10 @@ public class ISO8601DateParser {
 
     /**
      * Format date into yyyy-MM-ddThh:mm:ss[.sss][Z|[+-]hh:mm]
-     * @param date the date to format
+     *
+     * @param date   the date to format
      * @param millis true to include millis precision otherwise false
-     * @param tz timezone to use for the formatting (GMT will produce 'Z')
+     * @param tz     timezone to use for the formatting (GMT will produce 'Z')
      * @return the date formatted as yyyy-MM-ddThh:mm:ss[.sss][Z|[+-]hh:mm]
      */
     public static String format(final Date date, final boolean millis, final TimeZone tz) {
@@ -174,8 +177,9 @@ public class ISO8601DateParser {
 
     /**
      * Zero pad a number to a specified length
+     *
      * @param buffer buffer to use for padding
-     * @param value the integer value to pad if necessary.
+     * @param value  the integer value to pad if necessary.
      * @param length the length of the string we should zero pad
      */
     private static void padInt(final StringBuilder buffer, final int value, final int length) {

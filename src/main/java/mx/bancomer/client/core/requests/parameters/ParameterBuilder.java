@@ -6,9 +6,11 @@ import java.util.Map;
 
 public class ParameterBuilder {
 
-    /** Method to pass the parameters to a map */
+    /**
+     * Method to pass the parameters to a map
+     */
     public Map<String, Object> AsMap(List<Parameter> params) {
-        Map<String,Object> paramsAsMap = new HashMap<String, Object>();
+        Map<String, Object> paramsAsMap = new HashMap<String, Object>();
         for (Parameter param : params) {
             paramsAsMap.putAll(instanceSingleParameter(param));
             paramsAsMap.putAll(instanceContainer(param));

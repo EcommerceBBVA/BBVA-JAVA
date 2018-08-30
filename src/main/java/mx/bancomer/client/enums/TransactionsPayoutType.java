@@ -17,21 +17,29 @@ package mx.bancomer.client.enums;
 
 /**
  * The Enum TransactionsPayoutType.
- * 
+ *
  * @author Luis Delucio
  */
 public enum TransactionsPayoutType {
 
-	/** The in. */
-	IN,
+    /**
+     * The in.
+     */
+    IN,
 
-	/** The out. */
-	OUT,
+    /**
+     * The out.
+     */
+    OUT,
 
-	/** The charged adjustments. */
-	CHARGED_ADJUSTMENTS,
+    /**
+     * The charged adjustments.
+     */
+    CHARGED_ADJUSTMENTS,
 
-	/** The refunded adjustments. */
-	REFUNDED_ADJUSTMENTS
+    /**
+     * The refunded adjustments.
+     */
+    REFUNDED_ADJUSTMENTS
 
 }

@@ -10,7 +10,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class DeferralPayments {
 
-    /** The payments. */
+    /**
+     * The payments.
+     */
     private Integer payments;
 
 }

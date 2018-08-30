@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 
 /**
  * Parameters to refund a completed charge. Currently only card charges can be refunded this way.
+ *
  * @author elopez
  */
 public class RefundParams extends RequestBuilder {
@@ -38,12 +39,16 @@ public class RefundParams extends RequestBuilder {
         return this;
     }
 
-    /** Cause of the refund. Optional. */
+    /**
+     * Cause of the refund. Optional.
+     */
     public RefundParams description(final String description) {
         return this.with("description", description);
     }
-    
-    /** amount to refund. Optional, used in partial refunds */
+
+    /**
+     * amount to refund. Optional, used in partial refunds
+     */
     public RefundParams amount(final BigDecimal amount) {
         return this.with("amount", amount);
     }

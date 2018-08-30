@@ -24,12 +24,13 @@ import java.util.Date;
 
 /**
  * Formats the JSON-serialized dates.
+ *
  * @author elopez
  */
 public class DateFormatDeserializer implements JsonDeserializer<Date>, JsonSerializer<Date> {
 
     public Date deserialize(final JsonElement json, final Type paramType,
-            final JsonDeserializationContext paramJsonDeserializationContext) {
+                            final JsonDeserializationContext paramJsonDeserializationContext) {
         String data = json.getAsJsonPrimitive().getAsString();
         try {
             return this.parse(data);
@@ -57,9 +58,9 @@ public class DateFormatDeserializer implements JsonDeserializer<Date>, JsonSeria
         return ISO8601DateParser.parse(date);
     }
 
-	@Override
-	public JsonElement serialize(final Date src, final Type typeOfSrc, final JsonSerializationContext context) {
-		String dateFormatAsString = ISO8601DateParser.format(src);
-		return new JsonPrimitive(dateFormatAsString);
-	}
+    @Override
+    public JsonElement serialize(final Date src, final Type typeOfSrc, final JsonSerializationContext context) {
+        String dateFormatAsString = ISO8601DateParser.format(src);
+        return new JsonPrimitive(dateFormatAsString);
+    }
 }

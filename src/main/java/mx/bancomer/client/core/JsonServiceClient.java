@@ -29,6 +29,7 @@ import java.util.Map;
 /**
  * Calls the HTTP Service and parses the response, delegating to a HttpServiceClient and a JsonSerializer. Custom
  * implementations can be used if the defaults are not appropiate.
+ *
  * @author Heber Lazcano
  * @author elopez
  */
@@ -50,9 +51,10 @@ public class JsonServiceClient {
 
     /**
      * Initializes a JsonServiceClient with the default JsonSerializer and HttpServiceClient.
-     * @param location Base URL of the Webservice.
+     *
+     * @param location   Base URL of the Webservice.
      * @param merchantId Merchant's Id.
-     * @param key Public or private key. Public Key may have limited permissions.
+     * @param key        Public or private key. Public Key may have limited permissions.
      */
     public JsonServiceClient(final String location, final String merchantId, final String key) {
         this(location, merchantId, key, new DefaultSerializer(), new DefaultHttpServiceClient(true));
@@ -61,6 +63,7 @@ public class JsonServiceClient {
     /**
      * Initializes a JsonServiceClient using a custom implementation of a serializer and http client. Useful if the
      * defaults need to be changed or a different Http Client library needs to be used.
+     *
      * @param location
      * @param merchantId
      * @param key
@@ -68,7 +71,7 @@ public class JsonServiceClient {
      * @param httpClient
      */
     public JsonServiceClient(final String location, final String merchantId, final String key,
-            final JsonSerializer serializer, final HttpServiceClient httpClient) {
+                             final JsonSerializer serializer, final HttpServiceClient httpClient) {
         this.validateParameters(location, merchantId);
         String url = this.getUrl(location);
         this.root = url;
@@ -152,7 +155,7 @@ public class JsonServiceClient {
     }
 
     public <T> T post(final String path, final Map<String, Object> params, final Class<T> clazz,
-            final boolean withResponse) throws ServiceException, ServiceUnavailableException {
+                      final boolean withResponse) throws ServiceException, ServiceUnavailableException {
         return this.postObjectAsJson(path, params, withResponse ? clazz : null);
     }
 
@@ -160,7 +163,7 @@ public class JsonServiceClient {
             throws ServiceException, ServiceUnavailableException {
         return this.postObjectAsJson(path, params, withResponse ? clazz : null);
     }
-    
+
     public <T> T postObjectAsJson(final String path, final Object request, final Class<T> clazz)
             throws ServiceException, ServiceUnavailableException {
         return this.postString(path, this.serializer.serialize(request), clazz);

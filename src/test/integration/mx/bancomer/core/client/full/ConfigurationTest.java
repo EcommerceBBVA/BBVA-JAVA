@@ -23,9 +23,7 @@ import org.junit.Test;
 import java.util.TimeZone;
 
 import static mx.bancomer.core.client.TestConstans.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * @author elopez

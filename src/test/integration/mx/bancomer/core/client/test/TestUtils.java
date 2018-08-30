@@ -26,9 +26,9 @@ import java.math.BigDecimal;
  * @author elopez
  */
 public class TestUtils {
-    
+
     public static final String TEST_ENVIRONMENT = "https://dev-api..mx/";
-    
+
     public static Address prepareAddress() {
         Address address = new Address();
         address.setCity("Querétaro");
@@ -61,29 +61,34 @@ public class TestUtils {
 
         };
     }
-    
-    /** Credentials for a second merchant belonging to the same group. */
+
+    /**
+     * Credentials for a second merchant belonging to the same group.
+     */
     public static TestCredentials testMerchantCredentials() {
         return new TestCredentials()
                 .id("mioppzc1kgz2cj21s8sp")
                 .privateKey("***REMOVED***");
     }
 
-    
-    /** Credentials for a second merchant belonging to the same group. */
+
+    /**
+     * Credentials for a second merchant belonging to the same group.
+     */
     public static TestCredentials testSecondaryMerchantCredentials() {
         return new TestCredentials()
                 .id("mxml0yv7ju1klmzzwhnu")
                 .privateKey("***REMOVED***");
     }
 
-    /** Group Credentials for testing group operations. */
+    /**
+     * Group Credentials for testing group operations.
+     */
     public static TestCredentials testGroupCredentials() {
         return new TestCredentials()
                 .id("gvtdrtkxh2gygdneq7vz")
                 .privateKey("***REMOVED***");
     }
-    
-    
+
 
 }

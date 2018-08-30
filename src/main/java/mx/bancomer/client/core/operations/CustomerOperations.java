@@ -15,13 +15,6 @@
  */
 package mx.bancomer.client.core.operations;
 
-import static mx.bancomer.client.utils.PathComponents.CUSTOMERS;
-import static mx.bancomer.client.utils.PathComponents.ID;
-import static mx.bancomer.client.utils.PathComponents.MERCHANT_ID;
-
-import java.util.List;
-import java.util.Map;
-
 import mx.bancomer.client.Customer;
 import mx.bancomer.client.core.JsonServiceClient;
 import mx.bancomer.client.core.requests.parameters.Parameter;
@@ -30,8 +23,14 @@ import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import mx.bancomer.client.utils.SearchParams;
 
+import java.util.List;
+import java.util.Map;
+
+import static mx.bancomer.client.utils.PathComponents.*;
+
 /**
  * Operations for managing Customers.
+ *
  * @author elopez
  */
 public class CustomerOperations extends ServiceOperations {

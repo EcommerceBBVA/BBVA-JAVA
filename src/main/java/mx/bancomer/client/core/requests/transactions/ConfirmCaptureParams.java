@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 
 /**
  * Parameters to capture a preauthorized charge.
+ *
  * @author elopez
  */
 public class ConfirmCaptureParams extends RequestBuilder {

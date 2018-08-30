@@ -15,23 +15,14 @@
  */
 package mx.bancomer.client.core.impl;
 
+import com.google.gson.reflect.TypeToken;
+import mx.bancomer.client.*;
+
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import mx.bancomer.client.BankAccount;
-import mx.bancomer.client.Card;
-import mx.bancomer.client.Charge;
-import mx.bancomer.client.Customer;
-import mx.bancomer.client.GenericTransaction;
-import mx.bancomer.client.Order;
-import mx.bancomer.client.PaymentPlan;
-import mx.bancomer.client.Plan;
-import mx.bancomer.client.Transfer;
-
-import com.google.gson.reflect.TypeToken;
 
 /**
  * @author elopez
@@ -56,11 +47,11 @@ public class ListTypes {
         }.getType());
         map.put(GenericTransaction.class, new TypeToken<List<GenericTransaction>>() {
         }.getType());
-		map.put(Order.class, new TypeToken<List<Order>>() {
-		}.getType());
+        map.put(Order.class, new TypeToken<List<Order>>() {
+        }.getType());
         map.put(PaymentPlan.class, new TypeToken<List<PaymentPlan>>() {
         }.getType());
-        
+
         TYPES_MAP = Collections.unmodifiableMap(map);
     }
 

@@ -22,6 +22,7 @@ import java.util.Map;
 /**
  * Builds requests adding parameters to a hashmap. This class could be used by itself to make requests, but it should be
  * extended to create classes that list the allowed parameters for the request.
+ *
  * @author elopez
  */
 public abstract class RequestBuilder {
@@ -30,8 +31,9 @@ public abstract class RequestBuilder {
 
     /**
      * Adds the given parameter to the map and returns this same object.
+     *
      * @param jsonParam JSON name of the parameter to add
-     * @param obj Object to add to the map
+     * @param obj       Object to add to the map
      * @return This same object
      */
     @SuppressWarnings("unchecked")
@@ -42,6 +44,7 @@ public abstract class RequestBuilder {
 
     /**
      * Removes the given parameter from the request.
+     *
      * @param jsonParam The JSON name of the parameter.
      */
     public void without(final String jsonParam) {
@@ -50,6 +53,7 @@ public abstract class RequestBuilder {
 
     /**
      * Returns an unmodifiable map containing the builder's parameters.
+     *
      * @return this same object
      */
     public Map<String, Object> asMap() {
