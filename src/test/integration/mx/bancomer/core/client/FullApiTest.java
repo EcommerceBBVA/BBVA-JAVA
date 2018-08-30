@@ -40,6 +40,7 @@ import java.util.TimeZone;
 
 /**
  * Test creating all kinds of objects using an empty merchant account.
+ *
  * @author Eli Lopez, eli.lopez@opencard.mx
  */
 @Slf4j
@@ -54,8 +55,8 @@ public class FullApiTest {
 
     @Before
     public void setUp() throws Exception {
-        String merchantId = "miklpzr4nsvsucghm2qp";
-        String apiKey = "sk_08453429e4c54220a3a82ab4d974c31a";
+        String merchantId = "mtiwbo29vd4svc3lwm5a";
+        String apiKey = "sk_650a09d01a484fbbb407c34b311b62de";
         String endpoint = "https://dev-api.openpay.mx/";
         this.api = new BancomerAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
@@ -105,7 +106,7 @@ public class FullApiTest {
                         .postalCode("12789")
                 ));
         List<Parameter> request = new ArrayList<Parameter>(Arrays.asList(
-                new SingleParameter("affiliation_bbva", "720931"),
+                new SingleParameter("affiliation_bbva", "129354"),
                 new SingleParameter("amount", "200.00"),
                 new SingleParameter("description", "Test Charge"),
                 new SingleParameter("customer_language", ""),
@@ -120,7 +121,7 @@ public class FullApiTest {
         log.info("Customer direct card charge: {}", charge.getId());
 
         charge = this.api.charges().confirmCapture(custom.getId(), new ConfirmCaptureParams()
-                        .amount(new BigDecimal("200.00")).chargeId(charge.getId()));
+                .amount(new BigDecimal("200.00")).chargeId(charge.getId()));
         log.info("Customer direct card charge confirmed: {}", charge.getId());
 
         charge = this.api.charges().refund(custom.getId(), new RefundParams().chargeId(charge.getId()));
@@ -130,17 +131,17 @@ public class FullApiTest {
     // POST /v1/{merchantId}/charges/{transactionId}/refund
     private void testChargeMerchantCardCaptureRefund() throws ServiceException, ServiceUnavailableException {
         this.merchantCharge = this.api.charges().create(new ArrayList<Parameter>(Arrays.asList(
-                        new SingleParameter("affiliation_bbva", "720931"),
-                        new SingleParameter("amount", "200.00"),
-                        new SingleParameter("description", "Test Charge"),
-                        new SingleParameter("customer_language", ""),
-                        new SingleParameter("capture", "false"),
-                        new SingleParameter("use_3d_secure", "false"),
-                        new SingleParameter("use_card_points", "NONE"),
-                        new SingleParameter("token", this.token.getId()),
-                        new SingleParameter("currency", "MXN"),
-                        new SingleParameter("order_id", "oid-00051")
-                )));
+                new SingleParameter("affiliation_bbva", "129354"),
+                new SingleParameter("amount", "200.00"),
+                new SingleParameter("description", "Test Charge"),
+                new SingleParameter("customer_language", ""),
+                new SingleParameter("capture", "false"),
+                new SingleParameter("use_3d_secure", "false"),
+                new SingleParameter("use_card_points", "NONE"),
+                new SingleParameter("token", this.token.getId()),
+                new SingleParameter("currency", "MXN"),
+                new SingleParameter("order_id", "oid-00051")
+        )));
         log.info("Merchant card charge: {}", this.merchantCharge.getId());
 
         this.merchantCharge = this.api.charges().confirmCapture(
@@ -155,7 +156,7 @@ public class FullApiTest {
     // POST /v1/{merchantId}/charges
     private void testChargeMerchantStore() throws ServiceException, ServiceUnavailableException {
         this.merchantCharge = this.api.charges().create(new ArrayList<Parameter>(Arrays.asList(
-                new SingleParameter("affiliation_bbva", "720931"),
+                new SingleParameter("affiliation_bbva", "129354"),
                 new SingleParameter("amount", "200.00"),
                 new SingleParameter("description", "Test Charge"),
                 new SingleParameter("customer_language", ""),
@@ -165,7 +166,7 @@ public class FullApiTest {
                 new SingleParameter("token", this.token.getId()),
                 new SingleParameter("currency", "MXN"),
                 new SingleParameter("order_id", "oid-00052")
-                )));
+        )));
         log.info("Merchant store Charge: {}", this.merchantCharge.getId());
     }
 

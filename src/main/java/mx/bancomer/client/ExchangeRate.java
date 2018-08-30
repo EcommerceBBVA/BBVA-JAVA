@@ -1,34 +1,32 @@
 /**
- * 
+ *
  */
 package mx.bancomer.client;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.ToString;
-
-import com.google.gson.annotations.SerializedName;
-
 /**
  * @author Luis Delucio
- *
  */
 @Getter
 @ToString
 public class ExchangeRate {
 
-	@SerializedName("from")
-	private String fromCurrency;
+    @SerializedName("from")
+    private String fromCurrency;
 
-	@SerializedName("to")
-	private String toCurrency;
+    @SerializedName("to")
+    private String toCurrency;
 
-	private Date date;
+    private Date date;
 
-	private BigDecimal value;
-	
-	private BigDecimal rate;
-	
+    private BigDecimal value;
+
+    private BigDecimal rate;
+
 }

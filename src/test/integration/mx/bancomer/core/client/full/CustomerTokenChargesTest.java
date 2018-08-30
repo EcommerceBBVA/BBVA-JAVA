@@ -11,10 +11,8 @@ import mx.bancomer.client.core.requests.parameters.SingleParameter;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import static org.junit.Assert.*;
 
 @Slf4j
 public class CustomerTokenChargesTest extends BaseTest {
-    
+
     private Customer customer;
     private ParameterContainer customerRequest;
 
@@ -54,7 +52,7 @@ public class CustomerTokenChargesTest extends BaseTest {
         this.customerRequest.addValue("email", "johndoe@example.com");
         this.customerRequest.addValue("phone_number", "554-170-3567");
         this.customerRequest.addMultiValue(address);
-        
+
         this.customer = this.api.customers().create(this.customerRequest.getParameterValues());
     }
 

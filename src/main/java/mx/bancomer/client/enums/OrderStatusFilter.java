@@ -11,55 +11,56 @@ package mx.bancomer.client.enums;
 
 /**
  * Estatus disponibles para filtrar transacciones
+ *
  * @author Israel Grijalva israel.grijalva@openpay.mx
  */
 public enum OrderStatusFilter {
 
-    COMPLETED("completed","Completada"),
+    COMPLETED("completed", "Completada"),
 
-    CHARGEBACK_PENDING("chargeback_pending","Contracargo en disputa"),
+    CHARGEBACK_PENDING("chargeback_pending", "Contracargo en disputa"),
 
-    CHARGEBACK_ACCEPTED("chargeback_accepted","Contracargo aceptado"),
+    CHARGEBACK_ACCEPTED("chargeback_accepted", "Contracargo aceptado"),
 
-    CHARGEBACK_ADJUSTMENT("chargeback_adjustment","Contracargo Rechazado"),
+    CHARGEBACK_ADJUSTMENT("chargeback_adjustment", "Contracargo Rechazado"),
 
-    REFUNDED("refunded","Reembolsada"),
+    REFUNDED("refunded", "Reembolsada"),
 
-    CHARGE_PENDING("charge_pending","Esperando pago"),
+    CHARGE_PENDING("charge_pending", "Esperando pago"),
 
-    IN_PROGRESS("in_progress","Pendiente"),
+    IN_PROGRESS("in_progress", "Pendiente"),
 
-    CANCELLED("cancelled","Cancelada"),
+    CANCELLED("cancelled", "Cancelada"),
 
-    FAILED("failed","Fallida"),
-    
+    FAILED("failed", "Fallida"),
+
     ;
-	
-	private String value;
-	private String description;
 
-	private OrderStatusFilter(String value, String description) {
-		this.value = value;
-		this.description = description;
-	}
-	
-	public static OrderStatusFilter getByValue(final String value) {
-		OrderStatusFilter status = null;
-    	for (OrderStatusFilter statusTemp : OrderStatusFilter.values()) {
-    		if (statusTemp.getValue().equals(value)) {
-    			status = statusTemp;
-    			break;
-    		}
-    	}
-    	return status;
+    private String value;
+    private String description;
+
+    OrderStatusFilter(String value, String description) {
+        this.value = value;
+        this.description = description;
     }
-	
+
+    public static OrderStatusFilter getByValue(final String value) {
+        OrderStatusFilter status = null;
+        for (OrderStatusFilter statusTemp : OrderStatusFilter.values()) {
+            if (statusTemp.getValue().equals(value)) {
+                status = statusTemp;
+                break;
+            }
+        }
+        return status;
+    }
+
     public String getValue() {
-    	return this.value;
+        return this.value;
     }
 
     public String getDescription() {
-    	return this.description;
+        return this.description;
     }
-    
+
 }

@@ -40,7 +40,7 @@ public class ServiceException extends Exception {
 
     @SerializedName("request_id")
     private String requestId;
-    
+
     @SerializedName("risk_data")
     private RiskData riskData;
 

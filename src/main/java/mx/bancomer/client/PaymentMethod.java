@@ -19,8 +19,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.math.BigDecimal;
-
 /**
  * @author elopez
  */
@@ -31,11 +29,11 @@ public class PaymentMethod {
     private String type;
 
     private String bank;
-    
+
     private String clabe;
 
     private String name;
-    
+
     private String agreement;
 
     private String reference;

@@ -22,33 +22,36 @@ import java.util.Map;
 /**
  * Calls the web service with the given parameters and returns the response information necessary to deserialize the
  * object.
+ *
  * @author elopez
  */
 public interface HttpServiceClient {
 
-    public void setKey(final String key);
+    void setKey(final String key);
 
     /**
      * Optional method to set connection timeout. Should do nothing if not implemented.
+     *
      * @param timeoutMillis
      */
-    public void setConnectionTimeout(final int timeoutMillis);
+    void setConnectionTimeout(final int timeoutMillis);
 
     /**
      * Optional method to set socket timeout. Should do nothing if not implemented.
+     *
      * @param timeoutMillis
      */
-    public void setSocketTimeout(final int timeoutMillis);
+    void setSocketTimeout(final int timeoutMillis);
 
-    public HttpServiceResponse get(final String url) throws ServiceUnavailableException;
+    HttpServiceResponse get(final String url) throws ServiceUnavailableException;
 
-    public HttpServiceResponse get(final String url, final Map<String, String> queryParams)
+    HttpServiceResponse get(final String url, final Map<String, String> queryParams)
             throws ServiceUnavailableException;
 
-    public HttpServiceResponse delete(final String url) throws ServiceUnavailableException;
+    HttpServiceResponse delete(final String url) throws ServiceUnavailableException;
 
-    public HttpServiceResponse put(final String url, final String json) throws ServiceUnavailableException;
+    HttpServiceResponse put(final String url, final String json) throws ServiceUnavailableException;
 
-    public HttpServiceResponse post(final String url, final String json) throws ServiceUnavailableException;
+    HttpServiceResponse post(final String url, final String json) throws ServiceUnavailableException;
 
 }

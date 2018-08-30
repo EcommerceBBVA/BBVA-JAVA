@@ -70,7 +70,7 @@ public class Card {
 
     @SerializedName("points_card")
     private boolean pointsCard;
-    
+
     @SerializedName("points_type")
     private String pointsType;
 

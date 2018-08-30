@@ -33,34 +33,49 @@ import java.math.BigDecimal;
 @ToString
 public class PaymentPlan {
 
-    /** The id. */
+    /**
+     * The id.
+     */
     private String id;
 
-    /** The name. */
+    /**
+     * The name.
+     */
     @SerializedName("name")
     private String name;
 
-    /** The first payment percentage. */
+    /**
+     * The first payment percentage.
+     */
     @SerializedName("first_payment_percentage")
     private BigDecimal firstPaymentPercentage;
 
-    /** The max number of payments. */
+    /**
+     * The max number of payments.
+     */
     @SerializedName("maximun_number_of_payments")
     private Integer maxNumberOfPayments;
 
-    /** The months to pay. */
+    /**
+     * The months to pay.
+     */
     @SerializedName("months_to_pay")
     private Integer monthsToPay;
 
-    /** The status. */
+    /**
+     * The status.
+     */
     private String status;
 
-    /** The days to first payment. */
+    /**
+     * The days to first payment.
+     */
     @SerializedName("days_to_first_payment")
     private Integer daysToFirstPayment;
 
     /**
      * Name.
+     *
      * @param name the name
      * @return the payment plan
      */
@@ -71,6 +86,7 @@ public class PaymentPlan {
 
     /**
      * First payment percentage.
+     *
      * @param firstPaymentPercentage the first payment percentage
      * @return the payment plan
      */
@@ -81,6 +97,7 @@ public class PaymentPlan {
 
     /**
      * Max number of payments.
+     *
      * @param maxNumberOfPayments the max number of payments
      * @return the payment plan
      */
@@ -91,6 +108,7 @@ public class PaymentPlan {
 
     /**
      * Months to pay.
+     *
      * @param monthsToPay the months to pay
      * @return the payment plan
      */
@@ -101,6 +119,7 @@ public class PaymentPlan {
 
     /**
      * Days to first payment.
+     *
      * @param daysToFirstPayment the days to first payment
      * @return the payment plan
      */

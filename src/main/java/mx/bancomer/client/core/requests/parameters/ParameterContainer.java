@@ -24,7 +24,7 @@ public class ParameterContainer extends Parameter {
     }
 
     public void addValue(String name, String value) {
-        this.parameterValues.add(new SingleParameter(name,value));
+        this.parameterValues.add(new SingleParameter(name, value));
     }
 
     public void addMultiValue(ParameterContainer multiValue) {

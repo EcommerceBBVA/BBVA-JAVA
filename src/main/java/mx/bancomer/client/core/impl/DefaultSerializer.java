@@ -17,8 +17,8 @@ package mx.bancomer.client.core.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import mx.bancomer.client.serialization.DateFormatDeserializer;
 import mx.bancomer.client.core.JsonSerializer;
+import mx.bancomer.client.serialization.DateFormatDeserializer;
 
 import java.lang.reflect.Type;
 import java.util.Date;
@@ -26,6 +26,7 @@ import java.util.List;
 
 /**
  * Serializes and deserializes the values using Gson.
+ *
  * @author elopez
  * @see JsonSerializer
  */

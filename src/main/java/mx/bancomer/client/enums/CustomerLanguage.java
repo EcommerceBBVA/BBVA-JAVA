@@ -1,8 +1,12 @@
 package mx.bancomer.client.enums;
 
 public enum CustomerLanguage {
-    /** Spanish */
+    /**
+     * Spanish
+     */
     SP,
-    /** English */
+    /**
+     * English
+     */
     EN
 }

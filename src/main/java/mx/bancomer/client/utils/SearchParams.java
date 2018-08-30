@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  * Class: SearchParams.java
- * 
+ *
  * Change control:
  * ---------------------------------------------------------------------------------------
  * Version | Date       | Name                                      | Description
@@ -37,8 +37,8 @@ import java.util.Date;
  *
  * @author Eli Lopez, eli.lopez@opencard.mx
  * @author Marcos Coronado marcos.coronado@openpay.mx
- * @since 2014-06-06
  * @version 1.1
+ * @since 2014-06-06
  */
 public class SearchParams extends PaginationParams {
 
@@ -98,6 +98,7 @@ public class SearchParams extends PaginationParams {
 
     /**
      * <p>Criterio para buscar un monto menor o igual al monto definido como parámetro. </p>
+     *
      * @param amountLte monto usado como critero para evaluar
      * @return regresa el objeto {@link SearchParams} con el criterio adjunto
      */
@@ -105,9 +106,10 @@ public class SearchParams extends PaginationParams {
         this.params.put("amount[lte]", amountLte.toPlainString());
         return this;
     }
-    
+
     /**
      * <p>Criterio para buscar un monto mayor o igual al monto definido como parámetro. </p>
+     *
      * @param amountGte monto usado como critero para evaluar
      * @return regresa el objeto {@link SearchParams} con el criterio adjunto
      */
@@ -115,9 +117,10 @@ public class SearchParams extends PaginationParams {
         this.params.put("amount[gte]", amountGte.toPlainString());
         return this;
     }
-    
+
     /**
      * Search transactions by Order ID.
+     *
      * @param orderId The Order ID. Unique among successful transactions (Failed transactions may repeat).
      * @return List of transactions with the given Order ID.
      */
@@ -125,9 +128,10 @@ public class SearchParams extends PaginationParams {
         this.params.put("order_id", orderId);
         return this;
     }
-    
+
     /**
      * Search customer by External Id.
+     *
      * @param externalId The External ID. Unique customer external id.
      * @return List of Customers with the given External ID.
      */
@@ -135,9 +139,10 @@ public class SearchParams extends PaginationParams {
         this.params.put("external_id", externalId);
         return this;
     }
-    
+
     /**
      * Search transactions by Order Status.
+     *
      * @param orderStatus The Order Status. Unique among successful transactions (Failed transactions may repeat).
      * @return List of transactions with the given Order ID.
      */

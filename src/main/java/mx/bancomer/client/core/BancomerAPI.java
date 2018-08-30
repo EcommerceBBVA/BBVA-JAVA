@@ -25,6 +25,7 @@ import mx.bancomer.client.core.operations.TokenOperations;
  * A custom JsonServiceClient can be used for all the operations. If only one operation is needed in all the
  * application, it may be better to initialize a JsonServiceClient and instantiate the Operation object.
  * </p>
+ *
  * @author elopez
  */
 public class BancomerAPI {
@@ -52,14 +53,16 @@ public class BancomerAPI {
         this.jsonClient.getHttpClient().setConnectionTimeout(timeout);
     }
 
-    public CustomerOperations customers() { return  this.customerOperations; }
+    public CustomerOperations customers() {
+        return this.customerOperations;
+    }
 
     public ChargeOperations charges() {
         return this.chargeOperations;
     }
-    
+
     public TokenOperations tokens() {
-    	return this.tokenOperations;
+        return this.tokenOperations;
     }
 
 }

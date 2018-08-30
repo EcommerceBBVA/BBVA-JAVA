@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * Parameters used to paginate transaction lists.
+ *
  * @author Eli Lopez, eli.lopez@opencard.mx
  */
 public class PaginationParams {

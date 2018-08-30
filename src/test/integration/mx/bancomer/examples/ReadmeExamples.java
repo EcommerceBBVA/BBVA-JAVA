@@ -17,7 +17,6 @@ package mx.bancomer.examples;
 
 import mx.bancomer.client.Address;
 import mx.bancomer.client.Customer;
-import mx.bancomer.client.*;
 import mx.bancomer.client.core.BancomerAPI;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -25,6 +24,7 @@ import org.junit.Test;
 /**
  * A syntax test for the examples in the README.md file. It's not meant to run, just to check that the examples are
  * correct.
+ *
  * @author elopez
  */
 @Ignore("Not actually meant to run everytime, just to check the readme examples are ok")

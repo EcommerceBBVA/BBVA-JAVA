@@ -6,6 +6,7 @@ import lombok.Setter;
 
 /**
  * Holds the API Credentials for a Merchant or a Group.
+ *
  * @author elopez
  */
 @Getter
@@ -13,19 +14,27 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TestCredentials {
 
-    /** Merchant ID or Group ID to which the credentials belong. */
+    /**
+     * Merchant ID or Group ID to which the credentials belong.
+     */
     private String id;
 
-    /** Private Key, used to authenticate the user for back-end operations. */
+    /**
+     * Private Key, used to authenticate the user for back-end operations.
+     */
     private String privateKey;
 
-    /** Sets the {@link #id} and returns the same object. */
+    /**
+     * Sets the {@link #id} and returns the same object.
+     */
     public mx.bancomer.core.client.test.TestCredentials id(String id) {
         this.id = id;
         return this;
     }
 
-    /** Sets the {@link #privateKey} and returns the same object. */
+    /**
+     * Sets the {@link #privateKey} and returns the same object.
+     */
     public mx.bancomer.core.client.test.TestCredentials privateKey(String privateKey) {
         this.privateKey = privateKey;
         return this;

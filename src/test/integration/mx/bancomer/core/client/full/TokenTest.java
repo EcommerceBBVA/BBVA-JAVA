@@ -39,7 +39,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -83,12 +82,12 @@ public class TokenTest {
     public void testCreateToken() throws ServiceException, ServiceUnavailableException {
         // Create the list of parameters that you'll fill and you can add a single parameter only with a name and value
         /** Example
-        List<Parameter> tokenParams2 = new ArrayList<Parameter>();
-        tokenParams2.add(new SingleParameter("card_number", "4111111111111111"));
-        tokenParams2.add(new SingleParameter("cvv2", "295"));
-        tokenParams2.add(new SingleParameter("expiration_month", "12"));
-        tokenParams2.add(new SingleParameter("expiration_year", "20"));
-        tokenParams2.add(new SingleParameter("holder_name", "Juan Perez Lopez")); */
+         List<Parameter> tokenParams2 = new ArrayList<Parameter>();
+         tokenParams2.add(new SingleParameter("card_number", "4111111111111111"));
+         tokenParams2.add(new SingleParameter("cvv2", "295"));
+         tokenParams2.add(new SingleParameter("expiration_month", "12"));
+         tokenParams2.add(new SingleParameter("expiration_year", "20"));
+         tokenParams2.add(new SingleParameter("holder_name", "Juan Perez Lopez")); */
 
         Token token = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("card_number", "4111111111111111"),

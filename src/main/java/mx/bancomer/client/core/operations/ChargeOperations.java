@@ -16,14 +16,14 @@
 package mx.bancomer.client.core.operations;
 
 import mx.bancomer.client.Charge;
+import mx.bancomer.client.core.JsonServiceClient;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterBuilder;
+import mx.bancomer.client.core.requests.transactions.ConfirmCaptureParams;
+import mx.bancomer.client.core.requests.transactions.RefundParams;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import mx.bancomer.client.utils.PathComponents;
-import mx.bancomer.client.core.JsonServiceClient;
-import mx.bancomer.client.core.requests.transactions.ConfirmCaptureParams;
-import mx.bancomer.client.core.requests.transactions.RefundParams;
 
 import java.util.List;
 
@@ -31,6 +31,7 @@ import static mx.bancomer.client.utils.PathComponents.*;
 
 /**
  * Operations for Openpay Charges.
+ *
  * @author elopez
  */
 public class ChargeOperations extends ServiceOperations {
@@ -59,9 +60,10 @@ public class ChargeOperations extends ServiceOperations {
 
     /**
      * Creates any kind of charge at the Merchant level.
+     *
      * @param params Specific request params.
      * @return Charge data returned by Openpay
-     * @throws ServiceException When Openpay returns an error response
+     * @throws ServiceException            When Openpay returns an error response
      * @throws ServiceUnavailableException When an unexpected communication error occurs.
      */
     public Charge create(final List<Parameter> params) throws ServiceException, ServiceUnavailableException {
@@ -71,10 +73,11 @@ public class ChargeOperations extends ServiceOperations {
 
     /**
      * Creates any kind of charge at the Customer level.
+     *
      * @param customerId ID of the Customer created previously in Openpay.
-     * @param params Generic request params.
+     * @param params     Generic request params.
      * @return Charge data returned by Openpay
-     * @throws ServiceException When Openpay returns an error response
+     * @throws ServiceException            When Openpay returns an error response
      * @throws ServiceUnavailableException When an unexpected communication error occurs
      */
     public Charge create(final String customerId, List<Parameter> params)
@@ -83,40 +86,52 @@ public class ChargeOperations extends ServiceOperations {
         return this.getJsonClient().post(path, parameterBuilder.AsMap(params), Charge.class);
     }
 
-    /** This will return a specific charge merchant level */
+    /**
+     * This will return a specific charge merchant level
+     */
     public Charge get(final String transactionId) throws ServiceException, ServiceUnavailableException {
         String path = String.format(GET_FOR_MERCHANT_PATH, this.getMerchantId(), transactionId);
         return this.getJsonClient().get(path, Charge.class);
     }
 
-    /** This will return a specific charge customer level */
+    /**
+     * This will return a specific charge customer level
+     */
     public Charge get(final String customerId, final String transactionId) throws ServiceException,
             ServiceUnavailableException {
         String path = String.format(GET_FOR_CUSTOMER_PATH, this.getMerchantId(), customerId, transactionId);
         return this.getJsonClient().get(path, Charge.class);
     }
 
-    /** Refund Merchant Level */
+    /**
+     * Refund Merchant Level
+     */
     public Charge refund(final RefundParams params) throws ServiceException, ServiceUnavailableException {
         String path = String.format(REFUND_FOR_MERCHANT_PATH, this.getMerchantId(), params.getChargeId());
         return this.getJsonClient().post(path, params.asMap(), Charge.class);
     }
 
-    /** Refund Customer Level */
+    /**
+     * Refund Customer Level
+     */
     public Charge refund(final String customerId, final RefundParams params) throws ServiceException,
             ServiceUnavailableException {
         String path = String.format(REFUND_FOR_CUSTOMER_PATH, this.getMerchantId(), customerId, params.getChargeId());
         return this.getJsonClient().post(path, params.asMap(), Charge.class);
     }
 
-    /** Confirms a charge that was made with the option capture set to false.*/
+    /**
+     * Confirms a charge that was made with the option capture set to false.
+     */
     public Charge confirmCapture(final ConfirmCaptureParams params) throws ServiceException,
             ServiceUnavailableException {
         String path = String.format(CAPTURE_FOR_MERCHANT_PATH, this.getMerchantId(), params.getChargeId());
         return this.getJsonClient().post(path, params.asMap(), Charge.class);
     }
 
-    /**Confirms a charge that was made with the option capture set to false. Customer Level*/
+    /**
+     * Confirms a charge that was made with the option capture set to false. Customer Level
+     */
     public Charge confirmCapture(final String customerId, final ConfirmCaptureParams params)
             throws ServiceException, ServiceUnavailableException {
         String path = String.format(CAPTURE_FOR_CUSTOMER_PATH, this.getMerchantId(), customerId,

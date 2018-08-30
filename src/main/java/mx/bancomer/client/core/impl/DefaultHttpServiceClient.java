@@ -18,9 +18,9 @@ package mx.bancomer.client.core.impl;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import mx.bancomer.client.core.HttpServiceClient;
 import mx.bancomer.client.core.HttpServiceResponse;
+import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.http.Consts;
@@ -60,6 +60,7 @@ import java.util.Map.Entry;
 
 /**
  * Uses Apache HttpClient to call the web service and retrieve the response information.
+ *
  * @author elopez
  * @see HttpServiceClient
  */
@@ -103,10 +104,10 @@ public class DefaultHttpServiceClient implements HttpServiceClient {
     }
 
     protected CloseableHttpClient initHttpClient(final boolean requirePoolManager, final int connectionTimeout,
-            final int socketTimeout) {
+                                                 final int socketTimeout) {
         CloseableHttpClient httpClient;
         HttpClientConnectionManager manager;
-        
+
         SSLConnectionSocketFactory sslSocketFactory;
         SSLContext tlsContext;
         try {
@@ -120,15 +121,15 @@ public class DefaultHttpServiceClient implements HttpServiceClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
         if (requirePoolManager) {
             manager = new PoolingHttpClientConnectionManager(
-                    RegistryBuilder.<ConnectionSocketFactory> create().register("https", sslSocketFactory).build());
+                    RegistryBuilder.<ConnectionSocketFactory>create().register("https", sslSocketFactory).build());
         } else {
             manager = new BasicHttpClientConnectionManager(
-                    RegistryBuilder.<ConnectionSocketFactory> create().register("https", sslSocketFactory).build());
+                    RegistryBuilder.<ConnectionSocketFactory>create().register("https", sslSocketFactory).build());
         }
-        
+
         this.requestConfig = RequestConfig.custom().setConnectTimeout(connectionTimeout)
                 .setSocketTimeout(socketTimeout).build();
         ConnectionConfig connnectionConfig = ConnectionConfig.custom().setCharset(Charset.forName("UTF-8")).build();

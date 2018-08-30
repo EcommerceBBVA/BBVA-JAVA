@@ -23,6 +23,7 @@
  *
  */
 package mx.bancomer.client.core.operations;
+
 import mx.bancomer.client.Token;
 import mx.bancomer.client.core.JsonServiceClient;
 import mx.bancomer.client.core.requests.parameters.Parameter;
@@ -39,39 +40,40 @@ import static mx.bancomer.client.utils.PathComponents.*;
  * <p>Clase base que contiene las operaciones disponibles para la administracion de los webhooks </p>
  *
  * @author Marcos Coronado marcos.coronado@openpay.mx
- * @since 2014-11-27
  * @version 1.0
- *
+ * @since 2014-11-27
  */
 public class TokenOperations extends ServiceOperations {
 
-	private static final String BASE_PATH = MERCHANT_ID + TOKENS;
+    private static final String BASE_PATH = MERCHANT_ID + TOKENS;
 
-	private static final String GET_PATH = BASE_PATH + TOKEN_ID;
+    private static final String GET_PATH = BASE_PATH + TOKEN_ID;
 
-	private ParameterBuilder parameterBuilder = new ParameterBuilder();
+    private ParameterBuilder parameterBuilder = new ParameterBuilder();
 
-	public TokenOperations(final JsonServiceClient client) {
+    public TokenOperations(final JsonServiceClient client) {
         super(client);
     }
 
-	/**
-	 * <p>Método que permite crear un token en la plataforma</p>
-	 * @param params Objeto contenedor de la información para la creación del token
-	 * @return Regresa el mismo objeto Token, pero con el id y tarjeta
-	 */
-	public Token create(final List<Parameter> params) throws ServiceException, ServiceUnavailableException {
-		String path = String.format(BASE_PATH, this.getMerchantId());
-		return this.getJsonClient().post(path, parameterBuilder.AsMap(params), Token.class);
-	}
+    /**
+     * <p>Método que permite crear un token en la plataforma</p>
+     *
+     * @param params Objeto contenedor de la información para la creación del token
+     * @return Regresa el mismo objeto Token, pero con el id y tarjeta
+     */
+    public Token create(final List<Parameter> params) throws ServiceException, ServiceUnavailableException {
+        String path = String.format(BASE_PATH, this.getMerchantId());
+        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), Token.class);
+    }
 
-	/**
-	 * <p>Método que permite optener la información de un token</p>
-	 * @param id  Identificador único del token
-	 * @return Regresa un objeto Token
-	 */
-	public Token get(final String id) throws ServiceException, ServiceUnavailableException {
-		String path = String.format(GET_PATH, this.getMerchantId(), id);
-		return this.getJsonClient().get(path, Token.class);
-	}
+    /**
+     * <p>Método que permite optener la información de un token</p>
+     *
+     * @param id Identificador único del token
+     * @return Regresa un objeto Token
+     */
+    public Token get(final String id) throws ServiceException, ServiceUnavailableException {
+        String path = String.format(GET_PATH, this.getMerchantId(), id);
+        return this.getJsonClient().get(path, Token.class);
+    }
 }

@@ -15,15 +15,14 @@
  */
 package mx.bancomer.client;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Map;
-
+import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import com.google.gson.annotations.SerializedName;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -69,16 +68,16 @@ public class Transaction {
     @SerializedName("customer_id")
     private String customerId;
 
-	@SerializedName("due_date")
-	private Date dueDate;
+    @SerializedName("due_date")
+    private Date dueDate;
 
-	private TransactionFee fee;
+    private TransactionFee fee;
 
-	@SerializedName("exchange_rate")
-	private ExchangeRate exchangeRate;
+    @SerializedName("exchange_rate")
+    private ExchangeRate exchangeRate;
 
-	private Map<String, String> metadata;
-	
-	private String currency;
+    private Map<String, String> metadata;
+
+    private String currency;
 
 }
