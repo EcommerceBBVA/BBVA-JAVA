@@ -24,13 +24,13 @@
  */
 package mx.bancomer.client.core.operations;
 
-import mx.bancomer.client.Token;
 import mx.bancomer.client.core.JsonServiceClient;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterBuilder;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static mx.bancomer.client.utils.PathComponents.*;
@@ -61,9 +61,9 @@ public class TokenOperations extends ServiceOperations {
      * @param params Objeto contenedor de la información para la creación del token
      * @return Regresa el mismo objeto Token, pero con el id y tarjeta
      */
-    public Token create(final List<Parameter> params) throws ServiceException, ServiceUnavailableException {
+    public HashMap create(final List<Parameter> params) throws ServiceException, ServiceUnavailableException {
         String path = String.format(BASE_PATH, this.getMerchantId());
-        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), Token.class);
+        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), HashMap.class);
     }
 
     /**
@@ -72,8 +72,8 @@ public class TokenOperations extends ServiceOperations {
      * @param id Identificador único del token
      * @return Regresa un objeto Token
      */
-    public Token get(final String id) throws ServiceException, ServiceUnavailableException {
+    public HashMap get(final String id) throws ServiceException, ServiceUnavailableException {
         String path = String.format(GET_PATH, this.getMerchantId(), id);
-        return this.getJsonClient().get(path, Token.class);
+        return this.getJsonClient().get(path, HashMap.class);
     }
 }

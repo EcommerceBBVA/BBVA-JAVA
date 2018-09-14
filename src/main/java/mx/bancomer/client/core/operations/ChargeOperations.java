@@ -15,7 +15,6 @@
  */
 package mx.bancomer.client.core.operations;
 
-import mx.bancomer.client.Charge;
 import mx.bancomer.client.core.JsonServiceClient;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterBuilder;
@@ -25,6 +24,7 @@ import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import mx.bancomer.client.utils.PathComponents;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static mx.bancomer.client.utils.PathComponents.*;
@@ -66,9 +66,9 @@ public class ChargeOperations extends ServiceOperations {
      * @throws ServiceException            When Openpay returns an error response
      * @throws ServiceUnavailableException When an unexpected communication error occurs.
      */
-    public Charge create(final List<Parameter> params) throws ServiceException, ServiceUnavailableException {
+    public HashMap create(final List<Parameter> params) throws ServiceException, ServiceUnavailableException {
         String path = String.format(FOR_MERCHANT_PATH, this.getMerchantId());
-        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), Charge.class);
+        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), HashMap.class);
     }
 
     /**
@@ -80,63 +80,63 @@ public class ChargeOperations extends ServiceOperations {
      * @throws ServiceException            When Openpay returns an error response
      * @throws ServiceUnavailableException When an unexpected communication error occurs
      */
-    public Charge create(final String customerId, List<Parameter> params)
+    public HashMap create(final String customerId, List<Parameter> params)
             throws ServiceException, ServiceUnavailableException {
         String path = String.format(FOR_CUSTOMER_PATH, this.getMerchantId(), customerId);
-        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), Charge.class);
+        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), HashMap.class);
     }
 
     /**
      * This will return a specific charge merchant level
      */
-    public Charge get(final String transactionId) throws ServiceException, ServiceUnavailableException {
+    public HashMap get(final String transactionId) throws ServiceException, ServiceUnavailableException {
         String path = String.format(GET_FOR_MERCHANT_PATH, this.getMerchantId(), transactionId);
-        return this.getJsonClient().get(path, Charge.class);
+        return this.getJsonClient().get(path, HashMap.class);
     }
 
     /**
      * This will return a specific charge customer level
      */
-    public Charge get(final String customerId, final String transactionId) throws ServiceException,
+    public HashMap get(final String customerId, final String transactionId) throws ServiceException,
             ServiceUnavailableException {
         String path = String.format(GET_FOR_CUSTOMER_PATH, this.getMerchantId(), customerId, transactionId);
-        return this.getJsonClient().get(path, Charge.class);
+        return this.getJsonClient().get(path, HashMap.class);
     }
 
     /**
      * Refund Merchant Level
      */
-    public Charge refund(final RefundParams params) throws ServiceException, ServiceUnavailableException {
+    public HashMap refund(final RefundParams params) throws ServiceException, ServiceUnavailableException {
         String path = String.format(REFUND_FOR_MERCHANT_PATH, this.getMerchantId(), params.getChargeId());
-        return this.getJsonClient().post(path, params.asMap(), Charge.class);
+        return this.getJsonClient().post(path, params.asMap(), HashMap.class);
     }
 
     /**
      * Refund Customer Level
      */
-    public Charge refund(final String customerId, final RefundParams params) throws ServiceException,
+    public HashMap refund(final String customerId, final RefundParams params) throws ServiceException,
             ServiceUnavailableException {
         String path = String.format(REFUND_FOR_CUSTOMER_PATH, this.getMerchantId(), customerId, params.getChargeId());
-        return this.getJsonClient().post(path, params.asMap(), Charge.class);
+        return this.getJsonClient().post(path, params.asMap(), HashMap.class);
     }
 
     /**
      * Confirms a charge that was made with the option capture set to false.
      */
-    public Charge confirmCapture(final ConfirmCaptureParams params) throws ServiceException,
+    public HashMap confirmCapture(final ConfirmCaptureParams params) throws ServiceException,
             ServiceUnavailableException {
         String path = String.format(CAPTURE_FOR_MERCHANT_PATH, this.getMerchantId(), params.getChargeId());
-        return this.getJsonClient().post(path, params.asMap(), Charge.class);
+        return this.getJsonClient().post(path, params.asMap(), HashMap.class);
     }
 
     /**
      * Confirms a charge that was made with the option capture set to false. Customer Level
      */
-    public Charge confirmCapture(final String customerId, final ConfirmCaptureParams params)
+    public HashMap confirmCapture(final String customerId, final ConfirmCaptureParams params)
             throws ServiceException, ServiceUnavailableException {
         String path = String.format(CAPTURE_FOR_CUSTOMER_PATH, this.getMerchantId(), customerId,
                 params.getChargeId());
-        return this.getJsonClient().post(path, params.asMap(), Charge.class);
+        return this.getJsonClient().post(path, params.asMap(), HashMap.class);
     }
 
 }
