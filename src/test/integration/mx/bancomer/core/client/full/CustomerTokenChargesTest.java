@@ -1,9 +1,6 @@
 package mx.bancomer.core.client.full;
 
 import lombok.extern.slf4j.Slf4j;
-import mx.bancomer.client.Charge;
-import mx.bancomer.client.Customer;
-import mx.bancomer.client.Token;
 import mx.bancomer.client.core.BancomerAPI;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterContainer;
@@ -15,18 +12,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @Slf4j
+@SuppressWarnings("unchecked")
 public class CustomerTokenChargesTest extends BaseTest {
 
-    private Customer customer;
+    private ParameterContainer customer;
     private ParameterContainer customerRequest;
 
     @Before
@@ -53,12 +48,14 @@ public class CustomerTokenChargesTest extends BaseTest {
         this.customerRequest.addValue("phone_number", "554-170-3567");
         this.customerRequest.addMultiValue(address);
 
-        this.customer = this.api.customers().create(this.customerRequest.getParameterValues());
+        Map customerAsMap = this.api.customers().create(this.customerRequest.getParameterValues());
+        this.customer = new ParameterContainer("customer", customerAsMap);
     }
 
     @After
     public void tearDown() throws Exception {
-        this.api.customers().delete(this.customer.getId());
+        String customerId = this.customer.getSingleValue("id").getParameterValue();
+        this.api.customers().delete(customerId);
     }
 
     @Test
@@ -80,16 +77,21 @@ public class CustomerTokenChargesTest extends BaseTest {
                 new SingleParameter("order_id", orderId)
         ));
 
-        Charge transaction = this.api.charges().create(this.customer.getId(), tokenChargeParams);
+        String customerId = this.customer.getSingleValue("id").getParameterValue();
+
+        Map transactionAsMap = this.api.charges().create(customerId, tokenChargeParams);
+        ParameterContainer transaction = new ParameterContainer("transaction", transactionAsMap);
         assertNotNull(transaction);
-        assertEquals(amount, transaction.getAmount());
-        assertEquals(desc, transaction.getDescription());
-        String transactionId = transaction.getId();
-        transaction = this.api.charges().get(this.customer.getId(), transactionId);
-        assertThat(transaction.getId(), is(transactionId));
+
+        BigDecimal transactionAmount = new BigDecimal(transaction.getSingleValue("amount").getParameterValue());
+        assertEquals(amount, transactionAmount);
+        assertEquals(desc, transaction.getSingleValue("description").getParameterValue());
+        String transactionId = transaction.getSingleValue("id").getParameterValue();
+        transactionAsMap = this.api.charges().get(customerId, transactionId);
+        transaction = new ParameterContainer("transaction", transactionAsMap);
+        assertThat(transaction.getSingleValue("id").getParameterValue(), is(transactionId));
         assertNotNull(transaction);
-        assertEquals(amount, transaction.getAmount());
-        assertEquals(desc, transaction.getDescription());
+        assertEquals(desc, transaction.getSingleValue("description").getParameterValue());
         try {
             this.api.charges().get(transactionId);
             fail("Expected can't find");
@@ -99,14 +101,15 @@ public class CustomerTokenChargesTest extends BaseTest {
     }
 
     private String createToken() throws ServiceUnavailableException, ServiceException {
-        Token token = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
+        HashMap tokenAsMap = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("card_number", "4111111111111111"),
                 new SingleParameter("cvv2", "295"),
                 new SingleParameter("expiration_month", "12"),
                 new SingleParameter("expiration_year", "20"),
                 new SingleParameter("holder_name", "Juan Perez Lopez")
         )));
-        return token.getId();
+        ParameterContainer token = new ParameterContainer("token", tokenAsMap);
+        return token.getSingleValue("id").getParameterValue();
     }
 
 }

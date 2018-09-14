@@ -51,7 +51,7 @@ public class ReadmeExamples {
 
         // #### Creating a customer ####
 
-        Customer customer = api.customers().create(new Customer()
+        Customer customerAsMap = api.customers().create(new Customer()
                 .name("John")
                 .lastName("Doe")
                 .email("johndoe@example.com")

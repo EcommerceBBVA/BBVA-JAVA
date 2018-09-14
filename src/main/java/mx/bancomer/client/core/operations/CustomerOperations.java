@@ -23,6 +23,7 @@ import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import mx.bancomer.client.utils.SearchParams;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,22 +52,22 @@ public class CustomerOperations extends ServiceOperations {
         return this.getJsonClient().post(path, create, Customer.class);
     }
 
-    public Customer create(final List<Parameter> params) throws ServiceException,
+    public HashMap create(final List<Parameter> params) throws ServiceException,
             ServiceUnavailableException {
         String path = String.format(CUSTOMERS_PATH, this.getMerchantId());
-        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), Customer.class);
+        return this.getJsonClient().post(path, parameterBuilder.AsMap(params), HashMap.class);
     }
 
-    public List<Customer> list(final SearchParams params) throws ServiceException,
+    public List<HashMap> list(final SearchParams params) throws ServiceException,
             ServiceUnavailableException {
         String path = String.format(CUSTOMERS_PATH, this.getMerchantId());
         Map<String, String> map = params == null ? null : params.asMap();
-        return this.getJsonClient().list(path, map, Customer.class);
+        return this.getJsonClient().list(path, map, HashMap.class);
     }
 
-    public Customer get(final String customerId) throws ServiceException, ServiceUnavailableException {
+    public HashMap get(final String customerId) throws ServiceException, ServiceUnavailableException {
         String path = String.format(GET_CUSTOMER_PATH, this.getMerchantId(), customerId);
-        return this.getJsonClient().get(path, Customer.class);
+        return this.getJsonClient().get(path, HashMap.class);
     }
 
     public void delete(final String customerId) throws ServiceException, ServiceUnavailableException {

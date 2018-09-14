@@ -25,10 +25,9 @@
 package mx.bancomer.core.client.full;
 
 import lombok.extern.slf4j.Slf4j;
-import mx.bancomer.client.Customer;
-import mx.bancomer.client.Token;
 import mx.bancomer.client.core.BancomerAPI;
 import mx.bancomer.client.core.requests.parameters.Parameter;
+import mx.bancomer.client.core.requests.parameters.ParameterContainer;
 import mx.bancomer.client.core.requests.parameters.SingleParameter;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
@@ -39,6 +38,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -51,13 +51,14 @@ import java.util.TimeZone;
  * @since 2014-11-28
  */
 @Slf4j
+@SuppressWarnings("unchecked")
 public class TokenTest {
 
     private BancomerAPI api;
 
     private String tokenId;
 
-    private Customer customer;
+    private ParameterContainer customer;
 
     @Before
     public void setUp() throws Exception {
@@ -66,50 +67,47 @@ public class TokenTest {
         String endpoint = "https://dev-api.openpay.mx/";
         this.api = new BancomerAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
-        this.customer = this.api.customers().create(
-                new Customer().name("John").lastName("Doe").email("john@mail.com").phoneNumber("55-25634013")
-        );
+        Map customerAsMap = this.api.customers().create(new ArrayList<Parameter>(Arrays.asList(
+                new SingleParameter("name", "John"),
+                new SingleParameter("last_name", "Doe"),
+                new SingleParameter("email", "john@mail.com"),
+                new SingleParameter("phone_number", "55-25634013")
+        )));
+        this.customer = new ParameterContainer("customer", customerAsMap);
     }
 
     @After
     public void tearDown() throws Exception {
         if (this.customer != null) {
-            this.api.customers().delete(this.customer.getId());
+            this.api.customers().delete(this.customer.getSingleValue("id").getParameterValue());
         }
     }
 
     @Test
     public void testCreateToken() throws ServiceException, ServiceUnavailableException {
         // Create the list of parameters that you'll fill and you can add a single parameter only with a name and value
-        /** Example
-         List<Parameter> tokenParams2 = new ArrayList<Parameter>();
-         tokenParams2.add(new SingleParameter("card_number", "4111111111111111"));
-         tokenParams2.add(new SingleParameter("cvv2", "295"));
-         tokenParams2.add(new SingleParameter("expiration_month", "12"));
-         tokenParams2.add(new SingleParameter("expiration_year", "20"));
-         tokenParams2.add(new SingleParameter("holder_name", "Juan Perez Lopez")); */
-
-        Token token = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
+        Map tokenAsMap = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("card_number", "4111111111111111"),
                 new SingleParameter("cvv2", "295"),
                 new SingleParameter("expiration_month", "12"),
                 new SingleParameter("expiration_year", "20"),
                 new SingleParameter("holder_name", "Juan Perez Lopez")
         )));
-
-        log.info(token.toString());
-        Assert.assertNotNull(token.getId());
-        this.tokenId = token.getId();
+        ParameterContainer token = new ParameterContainer("token", tokenAsMap);
+        Assert.assertNotNull(token);
+        Assert.assertNotNull(token.getSingleValue("id"));
+        this.tokenId = token.getSingleValue("id").getParameterValue();
     }
 
     @Test
     public void testGetToken() throws ServiceException, ServiceUnavailableException {
-        Token token;
+        Map tokenAsMap;
         this.testCreateToken();
-        token = this.api.tokens().get(this.tokenId);
-        log.info(token.toString());
-        Assert.assertNotNull(token.getId());
-        this.tokenId = token.getId();
+        tokenAsMap = this.api.tokens().get(this.tokenId);
+        ParameterContainer token = new ParameterContainer("token", tokenAsMap);
+        Assert.assertNotNull(token);
+        Assert.assertNotNull(token.getSingleValue("id"));
+        this.tokenId = token.getSingleValue("id").getParameterValue();
     }
 
 }

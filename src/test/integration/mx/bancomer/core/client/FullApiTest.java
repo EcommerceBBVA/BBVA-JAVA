@@ -16,10 +16,6 @@
 package mx.bancomer.core.client;
 
 import lombok.extern.slf4j.Slf4j;
-import mx.bancomer.client.Address;
-import mx.bancomer.client.Charge;
-import mx.bancomer.client.Customer;
-import mx.bancomer.client.Token;
 import mx.bancomer.client.core.BancomerAPI;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterContainer;
@@ -33,10 +29,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Test creating all kinds of objects using an empty merchant account.
@@ -45,12 +38,14 @@ import java.util.TimeZone;
  */
 @Slf4j
 @Ignore
+@SuppressWarnings("unchecked")
 public class FullApiTest {
 
     private BancomerAPI api;
 
-    private Charge merchantCharge;
-    private Token token;
+    private ParameterContainer merchantCharge;
+    private ParameterContainer token;
+    private String tokenId;
     private ParameterContainer customer;
 
     @Before
@@ -95,16 +90,6 @@ public class FullApiTest {
     // /v1/{merchantId}/customers/{customerId}/charges/{transactionId}/refund
     private void testChargeCustomerDirectCaptureRefund() throws ServiceException,
             ServiceUnavailableException {
-        Customer custom = api.customers().create(new Customer()
-                .name("John").lastName("Doe")
-                .email("john.doe@mail.com")
-                .address(new Address()
-                        .line1("Av nueva")
-                        .city("Queretaro")
-                        .state("Queretaro")
-                        .countryCode("MX")
-                        .postalCode("12789")
-                ));
         List<Parameter> request = new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("affiliation_bbva", "129354"),
                 new SingleParameter("amount", "200.00"),
@@ -113,24 +98,30 @@ public class FullApiTest {
                 new SingleParameter("capture", "FALSE"),
                 new SingleParameter("use_3d_secure", "FALSE"),
                 new SingleParameter("use_card_points", "NONE"),
-                new SingleParameter("token", this.token.getId()),
+                new SingleParameter("token", this.tokenId),
                 new SingleParameter("currency", "MXN"),
                 new SingleParameter("order_id", "oid-00091")
         ));
-        Charge charge = this.api.charges().create(custom.getId(), request);
-        log.info("Customer direct card charge: {}", charge.getId());
+        Map chargeAsMap = this.api.charges().create(this.customer.getSingleValue("id").getParameterValue(), request);
+        ParameterContainer charge = new ParameterContainer("charge", chargeAsMap);
+        String chargeId = charge.getSingleValue("id").getParameterValue();
+        log.info("Customer direct card charge: {}", chargeId);
 
-        charge = this.api.charges().confirmCapture(custom.getId(), new ConfirmCaptureParams()
-                .amount(new BigDecimal("200.00")).chargeId(charge.getId()));
-        log.info("Customer direct card charge confirmed: {}", charge.getId());
+        chargeAsMap = this.api.charges().confirmCapture(this.customer.getSingleValue("id").getParameterValue(), new ConfirmCaptureParams()
+                .amount(new BigDecimal("200.00")).chargeId(chargeId));
+        charge = new ParameterContainer("charge", chargeAsMap);
+        chargeId = charge.getSingleValue("id").getParameterValue();
+        log.info("Customer direct card charge confirmed: {}", chargeId);
 
-        charge = this.api.charges().refund(custom.getId(), new RefundParams().chargeId(charge.getId()));
-        log.info("Customer card charge refunded: {}", charge.getRefund().getId());
+        chargeAsMap = this.api.charges().refund(this.customer.getSingleValue("id").getParameterValue(),
+                new RefundParams().chargeId(chargeId));
+        charge = new ParameterContainer("charge", chargeAsMap);
+        log.info("Customer card charge refunded: {}", charge.getContainerValue("refund").getSingleValue("id"));
     }
 
     // POST /v1/{merchantId}/charges/{transactionId}/refund
     private void testChargeMerchantCardCaptureRefund() throws ServiceException, ServiceUnavailableException {
-        this.merchantCharge = this.api.charges().create(new ArrayList<Parameter>(Arrays.asList(
+        Map chargeAsMap = this.api.charges().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("affiliation_bbva", "129354"),
                 new SingleParameter("amount", "200.00"),
                 new SingleParameter("description", "Test Charge"),
@@ -138,24 +129,29 @@ public class FullApiTest {
                 new SingleParameter("capture", "false"),
                 new SingleParameter("use_3d_secure", "false"),
                 new SingleParameter("use_card_points", "NONE"),
-                new SingleParameter("token", this.token.getId()),
+                new SingleParameter("token", this.tokenId),
                 new SingleParameter("currency", "MXN"),
                 new SingleParameter("order_id", "oid-00051")
         )));
-        log.info("Merchant card charge: {}", this.merchantCharge.getId());
+        this.merchantCharge = new ParameterContainer("charge", chargeAsMap);
+        String merchantChargeId = this.merchantCharge.getSingleValue("id").getParameterValue();
+        log.info("Merchant card charge: {}", merchantChargeId);
 
-        this.merchantCharge = this.api.charges().confirmCapture(
-                new ConfirmCaptureParams().amount(new BigDecimal("200.00")).chargeId(this.merchantCharge.getId()));
-        log.info("Merchant card charge confirmed: {}", this.merchantCharge.getId());
+        chargeAsMap = this.api.charges().confirmCapture(
+                new ConfirmCaptureParams().amount(new BigDecimal("200.00")).chargeId(merchantChargeId));
+        this.merchantCharge = new ParameterContainer("charge", chargeAsMap);
+        merchantChargeId = this.merchantCharge.getSingleValue("id").getParameterValue();
+        log.info("Merchant card charge confirmed: {}", merchantChargeId);
 
-        this.merchantCharge = this.api.charges().refund(new RefundParams().chargeId(this.merchantCharge.getId()));
-        log.info("Merchant card charge refunded: {}", this.merchantCharge.getRefund().getId());
+        chargeAsMap = this.api.charges().refund(new RefundParams().chargeId(merchantChargeId));
+        this.merchantCharge = new ParameterContainer("charge", chargeAsMap);
+        log.info("Merchant card charge refunded: {}", this.merchantCharge.getContainerValue("refund").getSingleValue("id"));
 
     }
 
     // POST /v1/{merchantId}/charges
     private void testChargeMerchantStore() throws ServiceException, ServiceUnavailableException {
-        this.merchantCharge = this.api.charges().create(new ArrayList<Parameter>(Arrays.asList(
+        Map chargeAsMap = this.api.charges().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("affiliation_bbva", "129354"),
                 new SingleParameter("amount", "200.00"),
                 new SingleParameter("description", "Test Charge"),
@@ -163,11 +159,12 @@ public class FullApiTest {
                 new SingleParameter("capture", "true"),
                 new SingleParameter("use_3d_secure", "false"),
                 new SingleParameter("use_card_points", "NONE"),
-                new SingleParameter("token", this.token.getId()),
+                new SingleParameter("token", this.tokenId),
                 new SingleParameter("currency", "MXN"),
                 new SingleParameter("order_id", "oid-00052")
         )));
-        log.info("Merchant store Charge: {}", this.merchantCharge.getId());
+        this.merchantCharge = new ParameterContainer("charge", chargeAsMap);
+        log.info("Merchant store Charge: {}", this.merchantCharge);
     }
 
     private void testChargeGet() throws ServiceException, ServiceUnavailableException {
@@ -176,7 +173,8 @@ public class FullApiTest {
 
     // GET /v1/{merchantId}/charges/{transactionId}
     private void testMerchantGetCharge() throws ServiceException, ServiceUnavailableException {
-        this.merchantCharge = this.api.charges().get(this.merchantCharge.getId());
+        Map chargeAsMap = this.api.charges().get(this.merchantCharge.getSingleValue("id").getParameterValue());
+        this.merchantCharge = new ParameterContainer("charge", chargeAsMap);
         log.info("Merchant charge {} ", this.merchantCharge);
     }
 
@@ -186,20 +184,22 @@ public class FullApiTest {
     }
 
     private void testCreateToken() throws ServiceException, ServiceUnavailableException {
-        this.token = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
+        Map tokenAsMap = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("card_number", "4111111111111111"),
                 new SingleParameter("cvv2", "295"),
                 new SingleParameter("expiration_month", "12"),
                 new SingleParameter("expiration_year", "20"),
                 new SingleParameter("holder_name", "Juan Perez Lopez")
         )));
+        this.token = new ParameterContainer("token", tokenAsMap);
+        this.tokenId = this.token.getSingleValue("id").getParameterValue();
         log.info("Token created {} ", this.token);
     }
 
     private void testGetToken() throws ServiceException, ServiceUnavailableException {
         this.testCreateToken();
-        this.token = this.api.tokens().get(this.token.getId());
-        log.info("Token {} ", this.token);
+        Map tokenAsMap = this.api.tokens().get(this.tokenId);
+        log.info("Token {} ", tokenAsMap);
     }
 
 }

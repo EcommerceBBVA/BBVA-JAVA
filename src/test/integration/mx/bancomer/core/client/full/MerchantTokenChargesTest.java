@@ -16,8 +16,6 @@
 package mx.bancomer.core.client.full;
 
 import lombok.extern.slf4j.Slf4j;
-import mx.bancomer.client.Charge;
-import mx.bancomer.client.Token;
 import mx.bancomer.client.core.BancomerAPI;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterContainer;
@@ -30,10 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,6 +40,7 @@ import static org.junit.Assert.assertNull;
 /**
  * @author Eli Lopez, eli.lopez@opencard.mx
  */
+@SuppressWarnings("unchecked")
 @Slf4j
 public class MerchantTokenChargesTest extends BaseTest {
 
@@ -79,23 +75,25 @@ public class MerchantTokenChargesTest extends BaseTest {
     public void testCreate() throws ServiceUnavailableException, ServiceException {
         BigDecimal amount = new BigDecimal("10.00");
         String desc = "Pago de taxi";
-        Charge transaction = createTransaction();
+        ParameterContainer transaction = createTransaction();
         assertNotNull(transaction);
-        assertEquals(amount, transaction.getAmount());
-        assertEquals(desc, transaction.getDescription());
-        assertThat(transaction.getCardPoints(), is(nullValue()));
+        assertEquals(amount, new BigDecimal(transaction.getSingleValue("amount").getParameterValue()));
+        assertEquals(desc, transaction.getSingleValue("description").getParameterValue());
+        ParameterContainer cardPoints = transaction.getContainerValue("card_points");
+        assertThat(cardPoints, is(nullValue()));
     }
 
     @Test
     public void testSearchById() throws ServiceUnavailableException, ServiceException {
         BigDecimal amount = new BigDecimal("10.00");
         String desc = "Pago de taxi";
-        Charge transaction = createTransaction();
+        ParameterContainer transaction = createTransaction();
         assertNotNull(transaction);
-        assertEquals(amount, transaction.getAmount());
-        assertEquals(desc, transaction.getDescription());
-        assertThat(transaction.getCardPoints(), is(nullValue()));
-        Charge charge = api.charges().get(transaction.getId());
+        assertEquals(amount, new BigDecimal(transaction.getSingleValue("amount").getParameterValue()));
+        assertEquals(desc, transaction.getSingleValue("description").getParameterValue());
+        ParameterContainer cardPoints = transaction.getContainerValue("card_points");
+        assertThat(cardPoints, is(nullValue()));
+        Map charge = api.charges().get(transaction.getSingleValue("id").getParameterValue());
         assertNotNull(charge);
     }
 
@@ -105,7 +103,7 @@ public class MerchantTokenChargesTest extends BaseTest {
         String desc = "Pago de taxi";
         String orderId = String.valueOf(System.currentTimeMillis());
 
-        Charge transaction = api.charges().create(Arrays.asList(
+        Map transactionAsMap = api.charges().create(Arrays.asList(
                 new SingleParameter("affiliation_bbva", "720931"),
                 new SingleParameter("amount", "10.00"),
                 new SingleParameter("description", desc),
@@ -119,47 +117,48 @@ public class MerchantTokenChargesTest extends BaseTest {
                 this.customer
         ));
 
+        ParameterContainer transaction = new ParameterContainer("charge", transactionAsMap);
+        String transactionId = transaction.getSingleValue("id").getParameterValue();
         assertNotNull(transaction);
-        assertEquals(amount, transaction.getAmount());
-        assertEquals(desc, transaction.getDescription());
-        assertEquals("in_progress", transaction.getStatus());
+        assertEquals(amount, new BigDecimal(transaction.getSingleValue("amount").getParameterValue()));
+        assertEquals(desc, transaction.getSingleValue("description").getParameterValue());
+        assertEquals("in_progress", transaction.getSingleValue("status").getParameterValue());
 
-        Charge confirmed = this.api.charges().confirmCapture(new ConfirmCaptureParams().chargeId(transaction.getId())
+        Map confirmedAsMap = this.api.charges().confirmCapture(new ConfirmCaptureParams().chargeId(transactionId)
                 .amount(amount));
-        assertEquals("completed", confirmed.getStatus());
+        ParameterContainer confirmed = new ParameterContainer("charge", confirmedAsMap);
+        assertEquals("completed", confirmed.getSingleValue("status").getParameterValue());
     }
 
     @Test
     public void testRefund() throws Exception {
-        Charge transaction = createTransaction();
-
-        String originalTransactionId = transaction.getId();
+        ParameterContainer transaction = createTransaction();
+        String originalTransactionId = transaction.getSingleValue("id").getParameterValue();
         assertNotNull(transaction);
-        assertNull(transaction.getRefund());
         String refDesc = "cancelacion (ignored description)";
-        transaction = this.api.charges().refund(new RefundParams()
-                .chargeId(transaction.getId())
+        Map transactionAsMap = this.api.charges().refund(new RefundParams()
+                .chargeId(originalTransactionId)
                 .description(refDesc));
-        assertNotNull(transaction.getRefund());
-        assertNull(transaction.getRefund().getFee());
-        assertEquals(refDesc, transaction.getRefund().getDescription());
+        transaction = new ParameterContainer("charge", transactionAsMap);
 
-        transaction = this.api.charges().get(originalTransactionId);
-        assertNotNull(transaction.getRefund());
+        ParameterContainer refund = transaction.getContainerValue("refund");
+        assertNotNull(refund);
+        assertNull(refund.getContainerValue("fee"));
+        assertEquals(refDesc, refund.getSingleValue("description").getParameterValue());
     }
 
     private String createToken() throws ServiceUnavailableException, ServiceException {
-        Token token = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
+        HashMap token = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("card_number", "4111111111111111"),
                 new SingleParameter("cvv2", "295"),
                 new SingleParameter("expiration_month", "12"),
                 new SingleParameter("expiration_year", "20"),
                 new SingleParameter("holder_name", "Juan Perez Lopez")
         )));
-        return token.getId();
+        return token.get("id").toString();
     }
 
-    private Charge createTransaction() throws ServiceUnavailableException, ServiceException {
+    private ParameterContainer createTransaction() throws ServiceUnavailableException, ServiceException {
         String desc = "Pago de taxi";
         String orderId = String.valueOf(System.currentTimeMillis());
         List<Parameter> tokenChargeParams = new ArrayList<Parameter>(Arrays.asList(
@@ -176,7 +175,8 @@ public class MerchantTokenChargesTest extends BaseTest {
 
         ));
         tokenChargeParams.add(this.customer);
-        return api.charges().create(tokenChargeParams);
+        Map chargeAsMap = api.charges().create(tokenChargeParams);
+        return new ParameterContainer("charge", chargeAsMap);
     }
 
 }
