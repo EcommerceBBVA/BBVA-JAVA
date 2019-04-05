@@ -30,60 +30,50 @@ Examples
 #### Starting the API ####
 
 ```java
-BancomerAPI api = new BancomerAPI("https://sandbox-api.openpay.mx", privateKey, merchantId);
+BancomerAPI api = new BancomerAPI("https://sand-api.ecommercebbva.com/", privateKey, merchantId);
 ```
 
 #### Creating a customer ####
 
 ```java
-Address address = new Address()
-		.line1("Calle Morelos #12 - 11")
-		.line2("Colonia Centro")             // Optional
-		.line3("Cuauhtémoc")                 // Optional
-		.city("Distrito Federal")
-		.postalCode("12345")	
-		.state("Queretaro")
-		.countryCode("MX");                  // ISO 3166-1 two-letter code
+ParameterContainer address = new ParameterContainer("address");
+        address.addValue("line1", "Calle Morelos #12 - 11");
+        address.addValue("line2", "Colonia Centro"); // Optional
+        address.addValue("line3", "Cuauhtémoc"); // Optional
+        address.addValue("city", "Distrito Federal");
+        address.addValue("postal_code", "12345");
+        address.addValue("state", "Queretaro");
+        address.addValue("country_code", "MX"); // ISO 3166-1 two-letter code
 		    
-Customer customer = api.customers().create(new Customer()
-        .name("John")
-        .lastName("Doe")
-        .email("johndoe@example.com")
-        .phoneNumber("554-170-3567")
-        .address(address));
+ParameterContainer customer = new ParameterContainer("customer");
+        customer.addValue("name","John");
+        customer.addValue("last_name", "doe");
+        customer.addValue("email", "johndoe@example.com");
+        customer.addValue("phone_number", "554-170-3567");
+        customer.addMultiValue(address);
 ```
 
 #### Charging ####
 
-Charging a credit card:		
+Charging:		
 
 ```java
-Card card = new Card()
-		.cardNumber("5555555555554444")          // No dashes or spaces
-		.holderName("Juan Pérez Nuñez")         
-		.cvv2("422")            
-		.expirationMonth(9)
-		.expirationYear(14);
 
-Charge charge = api.charges().create(customer.getId(), new CreateCardChargeParams()
-		.description("Service charge")
-		.amount(new BigDecimal("200.00"))       // Amount is in MXN
-		.orderId("Charge0001")                  // Optional transaction identifier
-		.card(card));
+ParameterContainer charge = new ParameterContainer("charge");
+        charge.addValue("affiliation_bbva", "781500");
+        charge.addValue("amount", "100.00");
+        charge.addValue("description", "Pago de taxi");
+        charge.addValue("currency", "MXN");
+        charge.addValue("order_id", "order-00051");
+        charge.addValue("redirect_url", "https://sand-portal.ecommercebbva.com/");
+        charge.addMultiValue(customer);
+
+HashMap chargeAsMap = api.charges().create(charge.getParameterValues());
 ```
 
 Refunding a card charge:
 
 ```java
-Charge refundedCharge = api.charges().refund(customer.getId(), new RefundParams()
-		.chargeId(charge.getId()));
-```
-
-Create a charge to be paid by bank transfer:
-
-```java
-Charge charge = api.charges().create(customer.getId(), new CreateBankChargeParams()
-		.description("Service charge")
-		.amount(new BigDecimal("100.00"))
-		.orderId("Charge0002"));
+HashMap refundedCharge = api.charges().refund(customerAsMap.get("id").toString(), new RefundParams()
+    .chargeId(chargeAsMap.get("id").toString()));
 ```

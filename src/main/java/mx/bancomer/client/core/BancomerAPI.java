@@ -20,7 +20,7 @@ import mx.bancomer.client.core.operations.CustomerOperations;
 import mx.bancomer.client.core.operations.TokenOperations;
 
 /**
- * Initializes all Operations from the Openpay API.
+ * Initializes all Operations from the Bancomer API.
  * <p>
  * A custom JsonServiceClient can be used for all the operations. If only one operation is needed in all the
  * application, it may be better to initialize a JsonServiceClient and instantiate the Operation object.

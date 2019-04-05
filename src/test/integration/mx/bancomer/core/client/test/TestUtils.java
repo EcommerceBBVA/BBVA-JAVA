@@ -27,7 +27,7 @@ import java.math.BigDecimal;
  */
 public class TestUtils {
 
-    public static final String TEST_ENVIRONMENT = "https://dev-api..mx/";
+    public static final String TEST_ENVIRONMENT = "https://sand-api.ecommercebbva.com/";
 
     public static Address prepareAddress() {
         Address address = new Address();

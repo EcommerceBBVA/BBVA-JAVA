@@ -17,11 +17,11 @@ package mx.bancomer.core.client;
 
 public class TestConstans {
 
-    public static final String ENDPOINT = "https://dev-api.openpay.mx";
+    public static final String ENDPOINT = "https://sand-api.ecommercebbva.com/";
 
-    public static final String MERCHANT_ID = "mtfsdeoulmcoj0xofpfc";
+    public static final String MERCHANT_ID = "mptdggroasfcmqs8plpy";
 
-    public static final String API_KEY = "sk_4ec3ef18cd01471487ca719f566d4d3f";
+    public static final String API_KEY = "***REMOVED***";
 
     public static final String CUSTOMER_ID = "alqrigidmw9jlgngwlrj";
 

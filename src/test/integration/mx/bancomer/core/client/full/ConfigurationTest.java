@@ -18,6 +18,7 @@ package mx.bancomer.core.client.full;
 import mx.bancomer.client.core.BancomerAPI;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.TimeZone;
@@ -42,6 +43,7 @@ public class ConfigurationTest {
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
     }
 
+    @Ignore
     @Test
     public void testForceHttps() throws Exception {
         BancomerAPI api = new BancomerAPI(ENDPOINT.replace("https", "http"), API_KEY, MERCHANT_ID);
@@ -54,6 +56,7 @@ public class ConfigurationTest {
         api.customers().list(null);
     }
 
+    @Ignore
     @Test
     public void testAddHttps() throws Exception {
         BancomerAPI api = new BancomerAPI(ENDPOINT.replace("https://", ""), API_KEY, MERCHANT_ID);
