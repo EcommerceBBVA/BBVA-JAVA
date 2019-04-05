@@ -1,9 +1,9 @@
 /*
- * COPYRIGHT © 2012-2017. OPENPAY.
+ * COPYRIGHT © 2012-2017. BANCOMER.
  * PATENT PENDING. ALL RIGHTS RESERVED.
- * OPENPAY IS A REGISTERED TRADEMARK OF OPENPAY INC.
+ * BANCOMER IS A REGISTERED TRADEMARK OF BANCOMER INC.
  *
- * This software is confidential and proprietary information of OPENPAY INC.
+ * This software is confidential and proprietary information of BANCOMER INC.
  * You shall not disclose such Confidential Information and shall use it only
  * in accordance with the company policy.
  */

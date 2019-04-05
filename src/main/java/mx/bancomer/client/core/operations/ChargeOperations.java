@@ -30,7 +30,7 @@ import java.util.List;
 import static mx.bancomer.client.utils.PathComponents.*;
 
 /**
- * Operations for Openpay Charges.
+ * Operations for Bancomer Charges.
  *
  * @author elopez
  */
@@ -62,8 +62,8 @@ public class ChargeOperations extends ServiceOperations {
      * Creates any kind of charge at the Merchant level.
      *
      * @param params Specific request params.
-     * @return Charge data returned by Openpay
-     * @throws ServiceException            When Openpay returns an error response
+     * @return Charge data returned by Bancomer
+     * @throws ServiceException            When Bancomer returns an error response
      * @throws ServiceUnavailableException When an unexpected communication error occurs.
      */
     public HashMap create(final List<Parameter> params) throws ServiceException, ServiceUnavailableException {
@@ -74,10 +74,10 @@ public class ChargeOperations extends ServiceOperations {
     /**
      * Creates any kind of charge at the Customer level.
      *
-     * @param customerId ID of the Customer created previously in Openpay.
+     * @param customerId ID of the Customer created previously in Bancomer.
      * @param params     Generic request params.
-     * @return Charge data returned by Openpay
-     * @throws ServiceException            When Openpay returns an error response
+     * @return Charge data returned by Bancomer
+     * @throws ServiceException            When Bancomer returns an error response
      * @throws ServiceUnavailableException When an unexpected communication error occurs
      */
     public HashMap create(final String customerId, List<Parameter> params)

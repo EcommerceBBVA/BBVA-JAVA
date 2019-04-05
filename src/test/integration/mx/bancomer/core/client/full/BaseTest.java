@@ -29,9 +29,9 @@ public class BaseTest {
 
     @Before
     public void setupAPI() throws Exception {
-        String merchantId = "mioppzc1kgz2cj21s8sp";
-        String apiKey = "sk_fe7d3759f4514f4b8fe11cf0404812de";
-        String endpoint = "https://dev-api.openpay.mx/";
+        String merchantId = "mptdggroasfcmqs8plpy";
+        String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
+        String endpoint = "https://sand-api.ecommercebbva.com/";
         this.api = new BancomerAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
     }

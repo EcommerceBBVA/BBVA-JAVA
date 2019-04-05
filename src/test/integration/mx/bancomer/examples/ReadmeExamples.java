@@ -16,10 +16,17 @@
 package mx.bancomer.examples;
 
 import mx.bancomer.client.Address;
+import mx.bancomer.client.Card;
+import mx.bancomer.client.Charge;
 import mx.bancomer.client.Customer;
 import mx.bancomer.client.core.BancomerAPI;
+import mx.bancomer.client.core.requests.parameters.ParameterContainer;
+import mx.bancomer.client.core.requests.transactions.RefundParams;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  * A syntax test for the examples in the README.md file. It's not meant to run, just to check that the examples are
@@ -33,32 +40,43 @@ public class ReadmeExamples {
 
     @Test
     public void testReadmeExamples() throws Exception {
-        String merchantId = "mtfsdeoulmcoj0xofpfc";
-        String apiKey = "sk_4ec3ef18cd01471487ca719f566d4d3f";
+        String merchantId = "mptdggroasfcmqs8plpy";
+        String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
+        String orderId = String.valueOf(System.currentTimeMillis());
 
         // #### Starting the API ####
 
-        BancomerAPI api = new BancomerAPI("https://dev-api.openpay.mx/", apiKey, merchantId);
+        BancomerAPI api = new BancomerAPI("https://sand-api.ecommercebbva.com/", apiKey, merchantId);
 
-        Address address = new Address()
-                .line1("Calle Morelos #12 - 11")
-                .line2("Colonia Centro") // Optional
-                .line3("Cuauhtémoc") // Optional
-                .city("Distrito Federal")
-                .postalCode("12345")
-                .state("Queretaro")
-                .countryCode("MX"); // ISO 3166-1 two-letter code
+        ParameterContainer address = new ParameterContainer("address");
+        address.addValue("line1", "Calle Morelos #12 - 11");
+        address.addValue("line2", "Colonia Centro"); // Optional
+        address.addValue("line3", "Cuauhtémoc"); // Optional
+        address.addValue("city", "Distrito Federal");
+        address.addValue("postal_code", "12345");
+        address.addValue("state", "Queretaro");
+        address.addValue("country_code", "MX"); // ISO 3166-1 two-letter code
 
         // #### Creating a customer ####
+        ParameterContainer customer = new ParameterContainer("customer");
+        customer.addValue("name","John");
+        customer.addValue("last_name", "doe");
+        customer.addValue("email", "johndoe@example.com");
+        customer.addValue("phone_number", "554-170-3567");
+        customer.addMultiValue(address);
 
-        Customer customerAsMap = api.customers().create(new Customer()
-                .name("John")
-                .lastName("Doe")
-                .email("johndoe@example.com")
-                .phoneNumber("554-170-3567")
-                .address(address));
+        HashMap customerAsMap = api.customers().create(customer.getParameterValues());
 
-        // #### Charging ####
+        ParameterContainer charge = new ParameterContainer("charge");
+        charge.addValue("affiliation_bbva", "781500");
+        charge.addValue("amount", "100.00");
+        charge.addValue("description", "Pago de taxi");
+        charge.addValue("currency", "MXN");
+        charge.addValue("order_id", orderId);
+        charge.addValue("redirect_url", "https://sand-portal.ecommercebbva.com/");
+        charge.addMultiValue(customer);
+
+        HashMap chargeAsMap = api.charges().create(charge.getParameterValues());
 
     }
 }

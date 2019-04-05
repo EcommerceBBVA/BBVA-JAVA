@@ -62,8 +62,8 @@ public class TokenTest {
 
     @Before
     public void setUp() throws Exception {
-        String merchantId = "miklpzr4nsvsucghm2qp";
-        String apiKey = "sk_08453429e4c54220a3a82ab4d974c31a";
+        String merchantId = "mevnavqc676iim4nfq63";
+        String apiKey = "sk_142f6bf4be0145f8bae51ec2b0b0d4d3";
         String endpoint = "https://dev-api.openpay.mx/";
         this.api = new BancomerAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));

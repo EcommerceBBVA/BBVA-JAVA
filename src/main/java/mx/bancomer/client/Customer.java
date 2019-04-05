@@ -98,14 +98,6 @@ public class Customer {
     }
 
     /**
-     * Customer externaId. Optional.
-     */
-    public Customer externalId(final String externalId) {
-        this.externalId = externalId;
-        return this;
-    }
-
-    /**
      * Customer requires account. Optional. Default true.
      */
     public Customer requiresAccount(final Boolean requiresAccount) {

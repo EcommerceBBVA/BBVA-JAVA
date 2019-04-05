@@ -4,7 +4,7 @@
 package mx.bancomer.client.enums;
 
 /**
- * Currencies supported by openpay.
+ * Currencies supported by bancomer.
  *
  * @author Luis Delucio
  */

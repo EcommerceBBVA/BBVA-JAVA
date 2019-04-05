@@ -25,7 +25,9 @@ import mx.bancomer.client.core.requests.transactions.RefundParams;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Categories;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -42,15 +44,15 @@ import static org.junit.Assert.assertNull;
  */
 @SuppressWarnings("unchecked")
 @Slf4j
-public class MerchantTokenChargesTest extends BaseTest {
+public class MerchantChargesTest extends BaseTest {
 
     private ParameterContainer customer;
 
     @Before
     public void setUp() throws Exception {
-        String merchantId = "mdopyxbg6cacgbdvqqxd";
-        String apiKey = "sk_36ad147b36234a30bc279031ac17e1a6";
-        String endpoint = "https://sandbox-api.openpay.mx/";
+        String merchantId = "mptdggroasfcmqs8plpy";
+        String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
+        String endpoint = "https://sand-api.ecommercebbva.com/";
         this.api = new BancomerAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
 
@@ -73,7 +75,7 @@ public class MerchantTokenChargesTest extends BaseTest {
 
     @Test
     public void testCreate() throws ServiceUnavailableException, ServiceException {
-        BigDecimal amount = new BigDecimal("10.00");
+        BigDecimal amount = new BigDecimal("10.99");
         String desc = "Pago de taxi";
         ParameterContainer transaction = createTransaction();
         assertNotNull(transaction);
@@ -85,7 +87,7 @@ public class MerchantTokenChargesTest extends BaseTest {
 
     @Test
     public void testSearchById() throws ServiceUnavailableException, ServiceException {
-        BigDecimal amount = new BigDecimal("10.00");
+        BigDecimal amount = new BigDecimal("10.99");
         String desc = "Pago de taxi";
         ParameterContainer transaction = createTransaction();
         assertNotNull(transaction);
@@ -97,39 +99,7 @@ public class MerchantTokenChargesTest extends BaseTest {
         assertNotNull(charge);
     }
 
-    @Test
-    public void testCreate_WithCaptureFalse() throws ServiceUnavailableException, ServiceException {
-        BigDecimal amount = new BigDecimal("10.00");
-        String desc = "Pago de taxi";
-        String orderId = String.valueOf(System.currentTimeMillis());
-
-        Map transactionAsMap = api.charges().create(Arrays.asList(
-                new SingleParameter("affiliation_bbva", "720931"),
-                new SingleParameter("amount", "10.00"),
-                new SingleParameter("description", desc),
-                new SingleParameter("customer_language", "SP"),
-                new SingleParameter("capture", "false"),
-                new SingleParameter("use_3d_secure", "false"),
-                new SingleParameter("use_card_points", "NONE"),
-                new SingleParameter("token", createToken()),
-                new SingleParameter("currency", "MXN"),
-                new SingleParameter("order_id", orderId),
-                this.customer
-        ));
-
-        ParameterContainer transaction = new ParameterContainer("charge", transactionAsMap);
-        String transactionId = transaction.getSingleValue("id").getParameterValue();
-        assertNotNull(transaction);
-        assertEquals(amount, new BigDecimal(transaction.getSingleValue("amount").getParameterValue()));
-        assertEquals(desc, transaction.getSingleValue("description").getParameterValue());
-        assertEquals("in_progress", transaction.getSingleValue("status").getParameterValue());
-
-        Map confirmedAsMap = this.api.charges().confirmCapture(new ConfirmCaptureParams().chargeId(transactionId)
-                .amount(amount));
-        ParameterContainer confirmed = new ParameterContainer("charge", confirmedAsMap);
-        assertEquals("completed", confirmed.getSingleValue("status").getParameterValue());
-    }
-
+    @Ignore
     @Test
     public void testRefund() throws Exception {
         ParameterContainer transaction = createTransaction();
@@ -147,35 +117,19 @@ public class MerchantTokenChargesTest extends BaseTest {
         assertEquals(refDesc, refund.getSingleValue("description").getParameterValue());
     }
 
-    private String createToken() throws ServiceUnavailableException, ServiceException {
-        HashMap token = this.api.tokens().create(new ArrayList<Parameter>(Arrays.asList(
-                new SingleParameter("card_number", "4111111111111111"),
-                new SingleParameter("cvv2", "295"),
-                new SingleParameter("expiration_month", "12"),
-                new SingleParameter("expiration_year", "20"),
-                new SingleParameter("holder_name", "Juan Perez Lopez")
-        )));
-        return token.get("id").toString();
-    }
-
     private ParameterContainer createTransaction() throws ServiceUnavailableException, ServiceException {
         String desc = "Pago de taxi";
         String orderId = String.valueOf(System.currentTimeMillis());
-        List<Parameter> tokenChargeParams = new ArrayList<Parameter>(Arrays.asList(
-                new SingleParameter("affiliation_bbva", "720931"),
-                new SingleParameter("amount", "10.00"),
+        List<Parameter> chargeParams = new ArrayList<Parameter>(Arrays.asList(
+                new SingleParameter("affiliation_bbva", "781500"),
+                new SingleParameter("amount", "10.99"),
                 new SingleParameter("description", desc),
-                new SingleParameter("customer_language", "SP"),
-                new SingleParameter("capture", "true"),
-                new SingleParameter("use_3d_secure", "false"),
-                new SingleParameter("use_card_points", "NONE"),
-                new SingleParameter("token", createToken()),
                 new SingleParameter("currency", "MXN"),
                 new SingleParameter("order_id", orderId)
 
         ));
-        tokenChargeParams.add(this.customer);
-        Map chargeAsMap = api.charges().create(tokenChargeParams);
+        chargeParams.add(this.customer);
+        Map chargeAsMap = api.charges().create(chargeParams);
         return new ParameterContainer("charge", chargeAsMap);
     }
 

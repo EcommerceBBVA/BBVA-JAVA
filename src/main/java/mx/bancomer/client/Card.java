@@ -165,7 +165,7 @@ public class Card {
     }
 
     /**
-     * Token previously generated in Openpay.
+     * Token previously generated in Bancomer.
      */
     public Card tokenId(final String tokenId) {
         this.tokenId = tokenId;
