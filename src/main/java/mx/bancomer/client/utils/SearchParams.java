@@ -15,12 +15,6 @@
  *
  * Class: SearchParams.java
  *
- * Change control:
- * ---------------------------------------------------------------------------------------
- * Version | Date       | Name                                      | Description
- * ---------------------------------------------------------------------------------------
- *   1.0	2014-01-08	Eli Lopez, eli.lopez@opencard.mx			 Creating Class.
- *   1.1	2014-06-06	Marcos Coronado marcos.coronado@openpay.mx	 Se agregan las propiedades de amountLte y amountGte faltantes.
  *
  */
 
@@ -34,9 +28,6 @@ import java.util.Date;
 
 /**
  * <p>Clase que permite definir los criterios utilizados para realizar busquedas de algún tipo de entidad.</p>
- *
- * @author Eli Lopez, eli.lopez@opencard.mx
- * @author Marcos Coronado marcos.coronado@openpay.mx
  * @version 1.1
  * @since 2014-06-06
  */

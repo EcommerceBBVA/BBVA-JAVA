@@ -12,7 +12,6 @@ package mx.bancomer.client.enums;
 /**
  * Estatus disponibles para filtrar transacciones
  *
- * @author Israel Grijalva israel.grijalva@openpay.mx
  */
 public enum OrderStatusFilter {
 
