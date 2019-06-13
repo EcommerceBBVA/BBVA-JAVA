@@ -19,6 +19,7 @@ import mx.bancomer.client.core.JsonServiceClient;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterBuilder;
 import mx.bancomer.client.core.requests.transactions.ConfirmCaptureParams;
+import mx.bancomer.client.core.requests.transactions.ConfirmChargeParams;
 import mx.bancomer.client.core.requests.transactions.RefundParams;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
@@ -51,6 +52,10 @@ public class ChargeOperations extends ServiceOperations {
     private static final String REFUND_FOR_CUSTOMER_PATH = GET_FOR_CUSTOMER_PATH + REFUND;
 
     private static final String CAPTURE_FOR_CUSTOMER_PATH = GET_FOR_CUSTOMER_PATH + CAPTURE;
+
+    private static final String CONFIRM_FOR_MERCHANT_PATH = GET_FOR_MERCHANT_PATH + CONFIRM;
+
+    private static final String CONFIRM_FOR_CUSTOMER_PATH = GET_FOR_CUSTOMER_PATH + CONFIRM;
 
     public ChargeOperations(final JsonServiceClient client) {
         super(client);
@@ -138,5 +143,24 @@ public class ChargeOperations extends ServiceOperations {
                 params.getChargeId());
         return this.getJsonClient().post(path, params.asMap(), HashMap.class);
     }
+
+    /**
+     * Confirms a charge that was made with the option confirm set to false.
+     */
+    public HashMap confirmCharge(final ConfirmChargeParams params) throws ServiceException,
+            ServiceUnavailableException {
+        String path = String.format(CONFIRM_FOR_MERCHANT_PATH, this.getMerchantId(), params.getChargeId());
+        return this.getJsonClient().post(path, params.asMap(), HashMap.class);
+    }
+
+    /**
+     * Confirms a charge that was made with the option confirm set to false.
+     */
+    public HashMap confirmCharge(final String customerId, final ConfirmChargeParams params) throws ServiceException, ServiceUnavailableException {
+        String path = String.format(CONFIRM_FOR_CUSTOMER_PATH, this.getMerchantId(), customerId,
+                params.getChargeId());
+        return this.getJsonClient().post(path, params.asMap(), HashMap.class);
+    }
+
 
 }

@@ -20,16 +20,12 @@ import mx.bancomer.client.core.BancomerAPI;
 import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterContainer;
 import mx.bancomer.client.core.requests.parameters.SingleParameter;
-import mx.bancomer.client.core.requests.transactions.ConfirmCaptureParams;
-import mx.bancomer.client.core.requests.transactions.RefundParams;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.security.SecureRandom;
 import java.util.*;
 
 /**
@@ -108,12 +104,9 @@ public class FullApiTest {
                 new SingleParameter("affiliation_bbva", "781500"),
                 new SingleParameter("amount", "200.00"),
                 new SingleParameter("description", "Test Charge"),
-                new SingleParameter("customer_language", ""),
-                new SingleParameter("capture", "true"),
-                new SingleParameter("use_card_points", "NONE"),
-                new SingleParameter("token", this.tokenId),
                 new SingleParameter("currency", "MXN"),
                 new SingleParameter("order_id", "oid-000" + new Random().nextInt(999)),
+                new SingleParameter("redirect_url", "https://sand-portal.ecommercebbva.com/"),
                 this.customer
         )));
         this.merchantCharge = new ParameterContainer("charge", chargeAsMap);

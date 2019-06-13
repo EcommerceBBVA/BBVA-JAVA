@@ -1,4 +1,4 @@
-![BBVA Bancomer Java](http://www.openpay.mx/img/github/java.jpg)[![Build Status](https://travis-ci.org/open-pay/openpay-java.png?branch=master)](https://travis-ci.org/open-pay/openpay-java)
+![BBVA Bancomer Java]()
 ===============
 
 Java client for Bancomer services

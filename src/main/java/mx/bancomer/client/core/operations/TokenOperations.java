@@ -15,12 +15,6 @@
  *
  * Class: TokenOperations.java
  *
- * Change control:
- * ---------------------------------------------------------------------------------------
- * Version | Date       | Name                                      | Description
- * ---------------------------------------------------------------------------------------
- *   1.0	2014-11-27	Marcos Coronado marcos.coronado@openpay.mx	 Creating Class.
- *
  */
 package mx.bancomer.client.core.operations;
 
@@ -39,7 +33,6 @@ import static mx.bancomer.client.utils.PathComponents.*;
 /**
  * <p>Clase base que contiene las operaciones disponibles para la administracion de los webhooks </p>
  *
- * @author Marcos Coronado marcos.coronado@openpay.mx
  * @version 1.0
  * @since 2014-11-27
  */

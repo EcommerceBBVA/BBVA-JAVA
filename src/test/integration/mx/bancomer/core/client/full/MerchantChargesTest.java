@@ -17,27 +17,20 @@ package mx.bancomer.core.client.full;
 
 import lombok.extern.slf4j.Slf4j;
 import mx.bancomer.client.core.BancomerAPI;
-import mx.bancomer.client.core.requests.parameters.Parameter;
 import mx.bancomer.client.core.requests.parameters.ParameterContainer;
-import mx.bancomer.client.core.requests.parameters.SingleParameter;
-import mx.bancomer.client.core.requests.transactions.ConfirmCaptureParams;
+import mx.bancomer.client.core.requests.transactions.ConfirmChargeParams;
 import mx.bancomer.client.core.requests.transactions.RefundParams;
 import mx.bancomer.client.exceptions.ServiceException;
 import mx.bancomer.client.exceptions.ServiceUnavailableException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Categories;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Map;
+import java.util.TimeZone;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * @author Eli Lopez, eli.lopez@opencard.mx
@@ -47,12 +40,19 @@ import static org.junit.Assert.assertNull;
 public class MerchantChargesTest extends BaseTest {
 
     private ParameterContainer customer;
+    private ParameterContainer card;
+    private ParameterContainer transaction;
+    private String ORDER_ID = String.valueOf(System.currentTimeMillis());
+    private final String DESCRIPTION = "Pago";
+    private final BigDecimal AMOUNT = new BigDecimal("100.99");
 
     @Before
     public void setUp() throws Exception {
+
         String merchantId = "mptdggroasfcmqs8plpy";
         String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
-        String endpoint = "https://sand-api.ecommercebbva.com/";
+        String endpoint = "https://sand-api.ecommercebbva.com/"; //*/
+
         this.api = new BancomerAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
 
@@ -71,66 +71,88 @@ public class MerchantChargesTest extends BaseTest {
         this.customer.addValue("email", "johndoe@example.com");
         this.customer.addValue("phone_number", "554-170-3567");
         this.customer.addMultiValue(address);
+
+        this.card = new ParameterContainer("card");
+        this.card.addValue("card_number", "4242424242424242");
+        this.card.addValue("holder_name", "John Doe");
+        this.card.addValue("expiration_year", "21");
+        this.card.addValue("expiration_month", "12");
+        this.card.addValue("cvv2", "842");
     }
 
     @Test
-    public void testCreate() throws ServiceUnavailableException, ServiceException {
-        BigDecimal amount = new BigDecimal("10.99");
-        String desc = "Pago de taxi";
-        ParameterContainer transaction = createTransaction();
-        assertNotNull(transaction);
-        assertEquals(amount, new BigDecimal(transaction.getSingleValue("amount").getParameterValue()));
-        assertEquals(desc, transaction.getSingleValue("description").getParameterValue());
-        ParameterContainer cardPoints = transaction.getContainerValue("card_points");
-        assertThat(cardPoints, is(nullValue()));
+    public void doTest() throws Exception {
+        this.testCreatePending();
+        this.testConfirm();
+        //this.testRefund();
+        /* You need update the merchant params this.testCreateWithCard(); */
+        this.testSearchById();
     }
 
-    @Test
-    public void testSearchById() throws ServiceUnavailableException, ServiceException {
-        BigDecimal amount = new BigDecimal("10.99");
-        String desc = "Pago de taxi";
-        ParameterContainer transaction = createTransaction();
-        assertNotNull(transaction);
-        assertEquals(amount, new BigDecimal(transaction.getSingleValue("amount").getParameterValue()));
-        assertEquals(desc, transaction.getSingleValue("description").getParameterValue());
-        ParameterContainer cardPoints = transaction.getContainerValue("card_points");
-        assertThat(cardPoints, is(nullValue()));
-        Map charge = api.charges().get(transaction.getSingleValue("id").getParameterValue());
-        assertNotNull(charge);
+    private void testCreatePending() throws ServiceUnavailableException, ServiceException {
+        this.transaction = createTransaction(Boolean.FALSE);
+        assertNotNull(this.transaction);
+        assertEquals(AMOUNT, new BigDecimal(this.transaction.getSingleValue("amount").getParameterValue()));
+        assertEquals(DESCRIPTION, this.transaction.getSingleValue("description").getParameterValue());
     }
 
-    @Ignore
-    @Test
-    public void testRefund() throws Exception {
-        ParameterContainer transaction = createTransaction();
-        String originalTransactionId = transaction.getSingleValue("id").getParameterValue();
-        assertNotNull(transaction);
-        String refDesc = "cancelacion (ignored description)";
+    private void testConfirm() throws Exception {
+        ConfirmChargeParams request = new ConfirmChargeParams();
+        request.chargeId(this.transaction.getSingleValue("id").getParameterValue());
+        request.deviceSessionId("PX00avsZWvTE2YKNuENo6QS5DtZ1Quvi");
+        request.tokenId(this.createToken());
+        Map charge = this.api.charges().confirmCharge(request);
+        ParameterContainer finalCharge = new ParameterContainer("charge", charge);
+        assertNotNull(finalCharge);
+    }
+
+    private void testRefund() throws Exception {
+        String originalTransactionId = this.transaction.getSingleValue("id").getParameterValue();
+        assertNotNull(originalTransactionId);
+        String refDesc = "Reembolso";
         Map transactionAsMap = this.api.charges().refund(new RefundParams()
                 .chargeId(originalTransactionId)
+                .amount(AMOUNT)
                 .description(refDesc));
-        transaction = new ParameterContainer("charge", transactionAsMap);
+        this.transaction = new ParameterContainer("charge", transactionAsMap);
 
-        ParameterContainer refund = transaction.getContainerValue("refund");
+        ParameterContainer refund = this.transaction.getContainerValue("refund");
         assertNotNull(refund);
-        assertNull(refund.getContainerValue("fee"));
         assertEquals(refDesc, refund.getSingleValue("description").getParameterValue());
     }
 
-    private ParameterContainer createTransaction() throws ServiceUnavailableException, ServiceException {
-        String desc = "Pago de taxi";
-        String orderId = String.valueOf(System.currentTimeMillis());
-        List<Parameter> chargeParams = new ArrayList<Parameter>(Arrays.asList(
-                new SingleParameter("affiliation_bbva", "781500"),
-                new SingleParameter("amount", "10.99"),
-                new SingleParameter("description", desc),
-                new SingleParameter("currency", "MXN"),
-                new SingleParameter("order_id", orderId)
+    private void testCreateWithCard() throws ServiceException, ServiceUnavailableException {
+        this.transaction = createTransaction(Boolean.TRUE);
+        assertNotNull(this.transaction);
+        assertEquals(AMOUNT, new BigDecimal(this.transaction.getSingleValue("amount").getParameterValue()));
+        assertEquals(DESCRIPTION, this.transaction.getSingleValue("description").getParameterValue());
+    }
 
-        ));
-        chargeParams.add(this.customer);
-        Map chargeAsMap = api.charges().create(chargeParams);
+    private void testSearchById() throws ServiceUnavailableException, ServiceException {
+        Map charge = api.charges().get(this.transaction.getSingleValue("id").getParameterValue());
+        assertNotNull(charge);
+    }
+
+    private ParameterContainer createTransaction(Boolean withCard) throws ServiceUnavailableException, ServiceException {
+        ParameterContainer charge = new ParameterContainer("charge");
+        charge.addValue("affiliation_bbva", "781500");
+        charge.addValue("amount", AMOUNT.toString());
+        charge.addValue("description", DESCRIPTION);
+        charge.addValue("currency", "MXN");
+        charge.addValue("order_id", ORDER_ID);
+        charge.addValue("redirect_url", "http://requestbin.fullcontact.com/w0tv73w0");
+        charge.addMultiValue(this.customer);
+        if (withCard) {
+            charge.addMultiValue(this.card);
+        }
+        Map chargeAsMap = api.charges().create(charge.getParameterValues());
         return new ParameterContainer("charge", chargeAsMap);
+    }
+
+    private String createToken() throws ServiceException, ServiceUnavailableException {
+        Map tokenAsMap = this.api.tokens().create(this.card.getParameterValues());
+        ParameterContainer token = new ParameterContainer("token", tokenAsMap);
+        return token.getSingleValue("id").getParameterValue();
     }
 
 }

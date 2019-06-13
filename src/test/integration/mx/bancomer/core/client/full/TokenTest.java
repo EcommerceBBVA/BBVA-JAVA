@@ -1,5 +1,4 @@
 /*
- * COPYRIGHT © 2014. OPENPAY.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +14,6 @@
  *
  * Class: TokenTest.java
  *
- * Change control:
- * ---------------------------------------------------------------------------------------
- * Version | Date       | Name                                      | Description
- * ---------------------------------------------------------------------------------------
- *   1.0	2014-11-28	Marcos Coronado marcos.coronado@openpay.mx	 Creating Class.
  *
  */
 package mx.bancomer.core.client.full;
@@ -45,8 +39,6 @@ import java.util.TimeZone;
  * <p>
  * Clase utilizada como contenedor de los parametros para la creacion de un Token
  * </p>
- *
- * @author Marcos Coronado marcos.coronado@openpay.mx
  * @version 1.0
  * @since 2014-11-28
  */

@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 	<name>bancomer-api-client</name>
 	<description>Java client for BBVA Bancomer Services</description>
-	<url>http://github.com/open-pay/openpay-java</url> <!-- TODO Need a new one -->
+	<url>https://github.com/BBVA-Bancomer-Ecommerce/BBVA-JAVA.git</url>
 	
 	<!-- Para publicar en Sonatype -->
  	<parent>
@@ -38,31 +38,11 @@
 		</license>
 	</licenses>
 
-	<!-- TODO Need a new one -->
 	<scm>
-		<connection>scm:git:https://github.com/open-pay/openpay-java.git</connection>
-		<developerConnection>scm:git:https://github.com/open-pay/openpay-java.git</developerConnection>
-		<url>http://github.com/open-pay/openpay-java</url>
+		<connection>scm:git:https://github.com/BBVA-Bancomer-Ecommerce/BBVA-JAVA.git</connection>
+		<developerConnection>scm:https://github.com/BBVA-Bancomer-Ecommerce/BBVA-JAVA.git</developerConnection>
+		<url>http://github.com/BBVA-Bancomer-Ecommerce/BBVA-JAVA.git</url>
 	</scm>
-
-	<developers>
-		<developer>
-			<name>Heber Lazcano</name>
-			<email>heber.lazcano@opencard.mx</email>
-		</developer>
-		<developer>
-			<name>Eli Lopez</name>
-			<email>eli.lopez@opencard.mx</email>
-		</developer>
-		<developer>
-			<name>Marcos Coronado</name>
-			<email>marcos.coronado@openpay.mx</email>
-		</developer>
-		<developer>
-			<name>Manuel Guevara</name>
-			<email>manuel.guevara@openpay.mx</email>
-		</developer>
-	</developers>
 
 	<dependencies>
 		<dependency>
