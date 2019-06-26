@@ -13,27 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.bbva.core.client.full;
-
-import mx.bbva.client.core.BbvaAPI;
-import org.junit.Before;
-
-import java.util.TimeZone;
+package mx.bbva.client.enums;
 
 /**
- * @author Eli Lopez, eli.lopez@opencard.mx
+ * The Enum TransactionsPayoutType.
+ *
+ * @author Luis Delucio
  */
-public class BaseTest {
+public enum TransactionsPayoutType {
 
-    protected BbvaAPI api;
+    /**
+     * The in.
+     */
+    IN,
 
-    @Before
-    public void setupAPI() throws Exception {
-        String merchantId = "mptdggroasfcmqs8plpy";
-        String apiKey = "***REMOVED***";
-        String endpoint = "https://sand-api.ecommercebbva.com/";
-        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
-        TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
-    }
+    /**
+     * The out.
+     */
+    OUT,
+
+    /**
+     * The charged adjustments.
+     */
+    CHARGED_ADJUSTMENTS,
+
+    /**
+     * The refunded adjustments.
+     */
+    REFUNDED_ADJUSTMENTS
 
 }

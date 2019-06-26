@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.bancomer.core.client.full;
+package mx.bbva.core.client.full;
 
 import lombok.extern.slf4j.Slf4j;
-import mx.bancomer.client.core.BancomerAPI;
-import mx.bancomer.client.core.requests.parameters.ParameterContainer;
-import mx.bancomer.client.core.requests.transactions.ConfirmChargeParams;
-import mx.bancomer.client.core.requests.transactions.RefundParams;
-import mx.bancomer.client.exceptions.ServiceException;
-import mx.bancomer.client.exceptions.ServiceUnavailableException;
+import mx.bbva.client.core.BbvaAPI;
+import mx.bbva.client.core.requests.parameters.ParameterContainer;
+import mx.bbva.client.core.requests.transactions.ConfirmChargeParams;
+import mx.bbva.client.core.requests.transactions.RefundParams;
+import mx.bbva.client.exceptions.ServiceException;
+import mx.bbva.client.exceptions.ServiceUnavailableException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,7 +53,7 @@ public class MerchantChargesTest extends BaseTest {
         String apiKey = "***REMOVED***";
         String endpoint = "https://sand-api.ecommercebbva.com/"; //*/
 
-        this.api = new BancomerAPI(endpoint, apiKey, merchantId);
+        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
 
         ParameterContainer address = new ParameterContainer("address");

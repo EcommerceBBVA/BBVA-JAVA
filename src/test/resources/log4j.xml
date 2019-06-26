@@ -9,7 +9,7 @@
         </layout>
     </appender>
 
-    <logger name="mx.bancomer">
+    <logger name="mx.bbva">
         <level value="DEBUG"/>
     </logger>
 

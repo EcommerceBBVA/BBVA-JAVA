@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.bancomer.examples;
+package mx.bbva.examples;
 
-import mx.bancomer.client.Address;
-import mx.bancomer.client.Card;
-import mx.bancomer.client.Charge;
-import mx.bancomer.client.Customer;
-import mx.bancomer.client.core.BancomerAPI;
-import mx.bancomer.client.core.requests.parameters.ParameterContainer;
-import mx.bancomer.client.core.requests.transactions.RefundParams;
+import mx.bbva.client.core.BbvaAPI;
+import mx.bbva.client.core.requests.parameters.ParameterContainer;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -46,7 +40,7 @@ public class ReadmeExamples {
 
         // #### Starting the API ####
 
-        BancomerAPI api = new BancomerAPI("https://sand-api.ecommercebbva.com/", apiKey, merchantId);
+        BbvaAPI api = new BbvaAPI("https://sand-api.ecommercebbva.com/", apiKey, merchantId);
 
         ParameterContainer address = new ParameterContainer("address");
         address.addValue("line1", "Calle Morelos #12 - 11");
