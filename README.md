@@ -1,9 +1,9 @@
-![BBVA Bancomer Java]()
+![BBVA Java]()
 ===============
 
-Java client for Bancomer services
+Java client for BBVA services
 
-This is a client implementing the payment services for Bancomer.
+This is a client implementing the payment services for BBVA.
 
 
 Installation
@@ -13,8 +13,8 @@ To install, add the following dependency to your pom.xml:
 
 ```xml
 <dependency>
-	<groupId>mx.bancomer</groupId>
-	<artifactId>bancomer-api-client</artifactId>
+	<groupId>mx.bbva</groupId>
+	<artifactId>bbva-api-client</artifactId>
 	<version>1.0.0</version>
 </dependency>
 ```
@@ -30,7 +30,7 @@ Examples
 #### Starting the API ####
 
 ```java
-BancomerAPI api = new BancomerAPI("https://sand-api.ecommercebbva.com/", privateKey, merchantId);
+BbvaAPI api = new BbvaAPI("https://sand-api.ecommercebbva.com/", privateKey, merchantId);
 ```
 
 #### Creating a customer ####

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Opencard Inc.
+ * Copyright 2013 Opencard Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.bbva.core.client.full;
+package mx.bbva.core.client.test;
 
+import lombok.Getter;
 import mx.bbva.client.core.BbvaAPI;
 import org.junit.Before;
 
 import java.util.TimeZone;
 
-/**
- * @author Eli Lopez, eli.lopez@opencard.mx
- */
-public class BaseTest {
+import static mx.bbva.core.client.TestConstans.*;
 
-    protected BbvaAPI api;
+/**
+ * @author elopez
+ */
+public class BaseOperationsTest {
+
+    @Getter
+    private BbvaAPI api;
 
     @Before
-    public void setupAPI() throws Exception {
-        String merchantId = "mptdggroasfcmqs8plpy";
-        String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
-        String endpoint = "https://sand-api.ecommercebbva.com/";
-        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
+    public void setUp() throws Exception {
+        BbvaAPI api = new BbvaAPI(ENDPOINT, API_KEY, MERCHANT_ID);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
     }
 

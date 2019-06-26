@@ -13,27 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.bbva.core.client.full;
+package mx.bbva.client;
 
-import mx.bbva.client.core.BbvaAPI;
-import org.junit.Before;
+import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 
-import java.util.TimeZone;
+import java.math.BigDecimal;
 
 /**
  * @author Eli Lopez, eli.lopez@opencard.mx
  */
-public class BaseTest {
+@Getter
+public class Merchant {
 
-    protected BbvaAPI api;
+    private String id;
 
-    @Before
-    public void setupAPI() throws Exception {
-        String merchantId = "mptdggroasfcmqs8plpy";
-        String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
-        String endpoint = "https://sand-api.ecommercebbva.com/";
-        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
-        TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
-    }
+    private String name;
+
+    private String email;
+
+    private String phone;
+
+    private String status;
+
+    @SerializedName("creation_date")
+    private String creationDate;
+
+    private BigDecimal balance;
+
+    private String clabe;
 
 }

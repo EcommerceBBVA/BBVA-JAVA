@@ -13,27 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.bbva.core.client.full;
+package mx.bbva.client;
 
-import mx.bbva.client.core.BbvaAPI;
-import org.junit.Before;
-
-import java.util.TimeZone;
+import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
+ * Represents any kind of transaction. Used in listings where we can't know what kind of transactions will we get.
+ *
  * @author Eli Lopez, eli.lopez@opencard.mx
  */
-public class BaseTest {
+@Getter
+@Setter
+@ToString(callSuper = true)
+public class GenericTransaction extends Transaction {
 
-    protected BbvaAPI api;
+    private Refund refund;
 
-    @Before
-    public void setupAPI() throws Exception {
-        String merchantId = "mptdggroasfcmqs8plpy";
-        String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
-        String endpoint = "https://sand-api.ecommercebbva.com/";
-        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
-        TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
-    }
+    @SerializedName("payment_method")
+    private PaymentMethod paymentMethod;
 
 }

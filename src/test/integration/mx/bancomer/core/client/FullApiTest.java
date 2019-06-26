@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.bancomer.core.client;
+package mx.bbva.core.client;
 
 import lombok.extern.slf4j.Slf4j;
-import mx.bancomer.client.core.BancomerAPI;
-import mx.bancomer.client.core.requests.parameters.Parameter;
-import mx.bancomer.client.core.requests.parameters.ParameterContainer;
-import mx.bancomer.client.core.requests.parameters.SingleParameter;
-import mx.bancomer.client.exceptions.ServiceException;
-import mx.bancomer.client.exceptions.ServiceUnavailableException;
+import mx.bbva.client.core.BbvaAPI;
+import mx.bbva.client.core.requests.parameters.Parameter;
+import mx.bbva.client.core.requests.parameters.ParameterContainer;
+import mx.bbva.client.core.requests.parameters.SingleParameter;
+import mx.bbva.client.exceptions.ServiceException;
+import mx.bbva.client.exceptions.ServiceUnavailableException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,7 +38,7 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class FullApiTest {
 
-    private BancomerAPI api;
+    private BbvaAPI api;
 
     private ParameterContainer merchantCharge;
     private ParameterContainer token;
@@ -50,7 +50,7 @@ public class FullApiTest {
         String merchantId = "mptdggroasfcmqs8plpy";
         String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
         String endpoint = "https://sand-api.ecommercebbva.com/";
-        this.api = new BancomerAPI(endpoint, apiKey, merchantId);
+        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
 
 

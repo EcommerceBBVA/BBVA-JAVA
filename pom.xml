@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>mx.bancomer</groupId>
-	<artifactId>bancomer-api-client</artifactId>
+	<groupId>mx.bbva</groupId>
+	<artifactId>bbva-api-client</artifactId>
 	<version>1.1.0</version>
 	<packaging>jar</packaging>
-	<name>bancomer-api-client</name>
-	<description>Java client for BBVA Bancomer Services</description>
-	<url>https://github.com/BBVA-Bancomer-Ecommerce/BBVA-JAVA.git</url>
+	<name>bbva-api-client</name>
+	<description>Java client for BBVA Services</description>
+	<url>https://github.com/EcommerceBBVA/BBVA-JAVA.git</url>
 	
 	<!-- Para publicar en Sonatype -->
  	<parent>
@@ -39,9 +39,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:https://github.com/BBVA-Bancomer-Ecommerce/BBVA-JAVA.git</connection>
-		<developerConnection>scm:https://github.com/BBVA-Bancomer-Ecommerce/BBVA-JAVA.git</developerConnection>
-		<url>http://github.com/BBVA-Bancomer-Ecommerce/BBVA-JAVA.git</url>
+		<connection>scm:git:https://github.com/EcommerceBBVA/BBVA-JAVA.git</connection>
+		<developerConnection>scm:https://github.com/EcommerceBBVA/BBVA-JAVA.git</developerConnection>
+		<url>http://github.com/EcommerceBBVA/BBVA-JAVA.git</url>
 	</scm>
 
 	<dependencies>
@@ -282,6 +282,6 @@
 	</profiles>
 
 	<organization>
-		<name>BBVA Bancomer</name>
+		<name>BBVA</name>
 	</organization>
 </project>

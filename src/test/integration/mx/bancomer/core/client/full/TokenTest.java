@@ -16,15 +16,15 @@
  *
  *
  */
-package mx.bancomer.core.client.full;
+package mx.bbva.core.client.full;
 
 import lombok.extern.slf4j.Slf4j;
-import mx.bancomer.client.core.BancomerAPI;
-import mx.bancomer.client.core.requests.parameters.Parameter;
-import mx.bancomer.client.core.requests.parameters.ParameterContainer;
-import mx.bancomer.client.core.requests.parameters.SingleParameter;
-import mx.bancomer.client.exceptions.ServiceException;
-import mx.bancomer.client.exceptions.ServiceUnavailableException;
+import mx.bbva.client.core.BbvaAPI;
+import mx.bbva.client.core.requests.parameters.Parameter;
+import mx.bbva.client.core.requests.parameters.ParameterContainer;
+import mx.bbva.client.core.requests.parameters.SingleParameter;
+import mx.bbva.client.exceptions.ServiceException;
+import mx.bbva.client.exceptions.ServiceUnavailableException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,7 +46,7 @@ import java.util.TimeZone;
 @SuppressWarnings("unchecked")
 public class TokenTest {
 
-    private BancomerAPI api;
+    private BbvaAPI api;
 
     private String tokenId;
 
@@ -57,7 +57,7 @@ public class TokenTest {
         String merchantId = "mevnavqc676iim4nfq63";
         String apiKey = "sk_142f6bf4be0145f8bae51ec2b0b0d4d3";
         String endpoint = "https://dev-api.openpay.mx/";
-        this.api = new BancomerAPI(endpoint, apiKey, merchantId);
+        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
         Map customerAsMap = this.api.customers().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("name", "John"),
