@@ -33,7 +33,7 @@ public class BaseOperationsTest {
 
     @Before
     public void setUp() throws Exception {
-        BbvaAPI api = new BbvaAPI(ENDPOINT, API_KEY, MERCHANT_ID);
+        BbvaAPI api = new BbvaAPI(ENDPOINT, API_KEY, MERCHANT_ID, PUBLIC_IP);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
     }
 

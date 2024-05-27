@@ -52,8 +52,8 @@ public class MerchantChargesTest extends BaseTest {
         String merchantId = "mptdggroasfcmqs8plpy";
         String apiKey = "***REMOVED***";
         String endpoint = "https://sand-api.ecommercebbva.com/"; //*/
-
-        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
+        String publicIp = "138.84.62.109";
+        this.api = new BbvaAPI(endpoint, apiKey, merchantId, publicIp);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
 
         ParameterContainer address = new ParameterContainer("address");
@@ -75,7 +75,7 @@ public class MerchantChargesTest extends BaseTest {
         this.card = new ParameterContainer("card");
         this.card.addValue("card_number", "4242424242424242");
         this.card.addValue("holder_name", "John Doe");
-        this.card.addValue("expiration_year", "21");
+        this.card.addValue("expiration_year", "29");
         this.card.addValue("expiration_month", "12");
         this.card.addValue("cvv2", "842");
     }

@@ -37,10 +37,10 @@ public class ReadmeExamples {
         String merchantId = "mptdggroasfcmqs8plpy";
         String apiKey = "***REMOVED***";
         String orderId = String.valueOf(System.currentTimeMillis());
-
+        String publicIp = "138.84.62.109";
         // #### Starting the API ####
 
-        BbvaAPI api = new BbvaAPI("https://sand-api.ecommercebbva.com/", apiKey, merchantId);
+        BbvaAPI api = new BbvaAPI("https://sand-api.ecommercebbva.com/", apiKey, merchantId, publicIp);
 
         ParameterContainer address = new ParameterContainer("address");
         address.addValue("line1", "Calle Morelos #12 - 11");
