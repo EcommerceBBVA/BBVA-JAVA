@@ -29,6 +29,8 @@ public interface HttpServiceClient {
 
     void setKey(final String key);
 
+    public void setPublicIp(final String publicIp);
+
     /**
      * Optional method to set connection timeout. Should do nothing if not implemented.
      *

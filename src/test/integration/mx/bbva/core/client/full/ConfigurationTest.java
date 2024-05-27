@@ -33,7 +33,7 @@ public class ConfigurationTest {
 
     @Test
     public void testNoAPIKey() throws Exception {
-        BbvaAPI api = new BbvaAPI(ENDPOINT.replace("https", "http"), null, MERCHANT_ID);
+        BbvaAPI api = new BbvaAPI(ENDPOINT.replace("https", "http"), null, MERCHANT_ID, PUBLIC_IP);
         try {
             api.customers().list(null);
             fail();
@@ -46,31 +46,31 @@ public class ConfigurationTest {
     @Ignore
     @Test
     public void testForceHttps() throws Exception {
-        BbvaAPI api = new BbvaAPI(ENDPOINT.replace("https", "http"), API_KEY, MERCHANT_ID);
+        BbvaAPI api = new BbvaAPI(ENDPOINT.replace("https", "http"), API_KEY, MERCHANT_ID, PUBLIC_IP);
         assertNotNull(api.customers().list(null));
     }
 
     @Test(expected = ServiceUnavailableException.class)
     public void testNoConnection() throws Exception {
-        BbvaAPI api = new BbvaAPI("http://localhost:9090", API_KEY, MERCHANT_ID);
+        BbvaAPI api = new BbvaAPI("http://localhost:9090", API_KEY, MERCHANT_ID, PUBLIC_IP);
         api.customers().list(null);
     }
 
     @Ignore
     @Test
     public void testAddHttps() throws Exception {
-        BbvaAPI api = new BbvaAPI(ENDPOINT.replace("https://", ""), API_KEY, MERCHANT_ID);
+        BbvaAPI api = new BbvaAPI(ENDPOINT.replace("https://", ""), API_KEY, MERCHANT_ID, PUBLIC_IP);
         assertNotNull(api.customers().list(null));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullMerchant() throws Exception {
-        new BbvaAPI(ENDPOINT.replace("https://", ""), API_KEY, null);
+        new BbvaAPI(ENDPOINT.replace("https://", ""), API_KEY, null, PUBLIC_IP);
     }
 
     @Test
     public void testWrongMerchant() throws Exception {
-        BbvaAPI api = new BbvaAPI(ENDPOINT, API_KEY, "notexists");
+        BbvaAPI api = new BbvaAPI(ENDPOINT, API_KEY, "notexists", PUBLIC_IP);
         try {
             api.customers().list(null);
             fail();
@@ -81,7 +81,7 @@ public class ConfigurationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullLocation() throws Exception {
-        new BbvaAPI(null, API_KEY, MERCHANT_ID);
+        new BbvaAPI(null, API_KEY, MERCHANT_ID, PUBLIC_IP);
     }
 
 }
