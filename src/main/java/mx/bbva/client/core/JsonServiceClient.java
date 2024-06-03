@@ -56,8 +56,8 @@ public class JsonServiceClient {
      * @param merchantId Merchant's Id.
      * @param key        Public or private key. Public Key may have limited permissions.
      */
-    public JsonServiceClient(final String location, final String merchantId, final String key) {
-        this(location, merchantId, key, new DefaultSerializer(), new DefaultHttpServiceClient(true));
+    public JsonServiceClient(final String location, final String merchantId, final String key, final String publicIp) {
+        this(location, merchantId, key,publicIp, new DefaultSerializer(), new DefaultHttpServiceClient(true));
     }
 
     /**
@@ -70,23 +70,27 @@ public class JsonServiceClient {
      * @param serializer
      * @param httpClient
      */
-    public JsonServiceClient(final String location, final String merchantId, final String key,
+    public JsonServiceClient(final String location, final String merchantId, final String key,final String publicIp,
                              final JsonSerializer serializer, final HttpServiceClient httpClient) {
-        this.validateParameters(location, merchantId);
+        this.validateParameters(location, merchantId, publicIp);
         String url = this.getUrl(location);
         this.root = url;
         this.merchantId = merchantId;
         this.serializer = serializer;
         this.httpClient = httpClient;
         this.httpClient.setKey(key);
+        this.httpClient.setPublicIp(publicIp);
     }
 
-    private void validateParameters(final String location, final String merchantId) {
+    private void validateParameters(final String location, final String merchantId, final String publicIp) {
         if (location == null) {
             throw new IllegalArgumentException("Location can't be null");
         }
         if (merchantId == null) {
             throw new IllegalArgumentException("Merchant ID can't be null");
+        }
+        if (publicIp == null|| publicIp.isEmpty()) {
+            throw new IllegalArgumentException("Public Ip can't be null or empty");
         }
     }
 

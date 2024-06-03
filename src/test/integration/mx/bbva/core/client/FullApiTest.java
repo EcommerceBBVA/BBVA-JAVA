@@ -50,7 +50,8 @@ public class FullApiTest {
         String merchantId = "mptdggroasfcmqs8plpy";
         String apiKey = "***REMOVED***";
         String endpoint = "https://sand-api.ecommercebbva.com/";
-        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
+        String publicIp = "138.84.62.109";
+        this.api = new BbvaAPI(endpoint, apiKey, merchantId, publicIp);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
 
 
@@ -134,7 +135,7 @@ public class FullApiTest {
                 new SingleParameter("card_number", "4242424242424242"),
                 new SingleParameter("cvv2", "295"),
                 new SingleParameter("expiration_month", "12"),
-                new SingleParameter("expiration_year", "20"),
+                new SingleParameter("expiration_year", "29"),
                 new SingleParameter("holder_name", "Juan Perez Lopez")
         )));
         this.token = new ParameterContainer("token", tokenAsMap);

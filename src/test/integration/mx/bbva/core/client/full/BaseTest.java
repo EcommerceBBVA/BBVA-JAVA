@@ -32,7 +32,8 @@ public class BaseTest {
         String merchantId = "mptdggroasfcmqs8plpy";
         String apiKey = "***REMOVED***";
         String endpoint = "https://sand-api.ecommercebbva.com/";
-        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
+        String publicIp = "138.84.62.109";
+        this.api = new BbvaAPI(endpoint, apiKey, merchantId, publicIp);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
     }
 

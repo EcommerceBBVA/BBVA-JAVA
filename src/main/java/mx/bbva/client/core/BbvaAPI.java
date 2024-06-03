@@ -38,8 +38,8 @@ public class BbvaAPI {
 
     private final TokenOperations tokenOperations;
 
-    public BbvaAPI(final String location, final String apiKey, final String merchantId) {
-        this(new JsonServiceClient(location, merchantId, apiKey));
+    public BbvaAPI(final String location, final String apiKey, final String merchantId, final String publicIp) {
+        this(new JsonServiceClient(location, merchantId, apiKey, publicIp));
     }
 
     public BbvaAPI(final JsonServiceClient client) {
