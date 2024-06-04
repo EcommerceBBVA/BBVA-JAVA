@@ -57,7 +57,8 @@ public class TokenTest {
         String merchantId = "mevnavqc676iim4nfq63";
         String apiKey = "sk_142f6bf4be0145f8bae51ec2b0b0d4d3";
         String endpoint = "https://dev-api.openpay.mx/";
-        this.api = new BbvaAPI(endpoint, apiKey, merchantId);
+        String publicIp = "138.84.62.109";
+        this.api = new BbvaAPI(endpoint, apiKey, merchantId, publicIp);
         TimeZone.setDefault(TimeZone.getTimeZone("Mexico/General"));
         Map customerAsMap = this.api.customers().create(new ArrayList<Parameter>(Arrays.asList(
                 new SingleParameter("name", "John"),
@@ -82,7 +83,7 @@ public class TokenTest {
                 new SingleParameter("card_number", "4111111111111111"),
                 new SingleParameter("cvv2", "295"),
                 new SingleParameter("expiration_month", "12"),
-                new SingleParameter("expiration_year", "20"),
+                new SingleParameter("expiration_year", "29"),
                 new SingleParameter("holder_name", "Juan Perez Lopez")
         )));
         ParameterContainer token = new ParameterContainer("token", tokenAsMap);
