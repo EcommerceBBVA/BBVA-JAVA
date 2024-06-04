@@ -30,7 +30,8 @@ Examples
 #### Starting the API ####
 
 ```java
-BbvaAPI api = new BbvaAPI("https://sand-api.ecommercebbva.com/", privateKey, merchantId);
+String publicIp = "138.84.62.109";
+BbvaAPI api = new BbvaAPI("https://sand-api.ecommercebbva.com/", privateKey, merchantId, publicIp);
 ```
 
 #### Creating a customer ####
