@@ -55,7 +55,7 @@ public class TokenTest {
     @Before
     public void setUp() throws Exception {
         String merchantId = "mevnavqc676iim4nfq63";
-        String apiKey = "sk_142f6bf4be0145f8bae51ec2b0b0d4d3";
+        String apiKey = "sk_xxxxxxxxxxxxxxxxxxxxxxxxx";
         String endpoint = "https://dev-api.openpay.mx/";
         String publicIp = "138.84.62.109";
         this.api = new BbvaAPI(endpoint, apiKey, merchantId, publicIp);

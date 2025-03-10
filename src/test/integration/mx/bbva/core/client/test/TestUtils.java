@@ -68,7 +68,7 @@ public class TestUtils {
     public static TestCredentials testMerchantCredentials() {
         return new TestCredentials()
                 .id("mioppzc1kgz2cj21s8sp")
-                .privateKey("sk_fe7d3759f4514f4b8fe11cf0404812de");
+                .privateKey("sk_xxxxxxxxxxxxxxxxxxxxxxxxx");
     }
 
 
@@ -78,7 +78,7 @@ public class TestUtils {
     public static TestCredentials testSecondaryMerchantCredentials() {
         return new TestCredentials()
                 .id("mxml0yv7ju1klmzzwhnu")
-                .privateKey("sk_5ca11fcff28145c999c8c4df6ac42562");
+                .privateKey("sk_xxxxxxxxxxxxxxxxxxxxxxxxx");
     }
 
     /**
@@ -87,7 +87,7 @@ public class TestUtils {
     public static TestCredentials testGroupCredentials() {
         return new TestCredentials()
                 .id("gvtdrtkxh2gygdneq7vz")
-                .privateKey("sk_e92dsvx4r42ugbandpmywcus5jqjm7jd");
+                .privateKey("sk_xxxxxxxxxxxxxxxxxxxxxxxxx");
     }
 
 
