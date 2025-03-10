@@ -30,7 +30,7 @@ public class BaseTest {
     @Before
     public void setupAPI() throws Exception {
         String merchantId = "mptdggroasfcmqs8plpy";
-        String apiKey = "***REMOVED***";
+        String apiKey = "sk_xxxxxxxxxxxxxxxxxxxxxxxxx";
         String endpoint = "https://sand-api.ecommercebbva.com/";
         String publicIp = "138.84.62.109";
         this.api = new BbvaAPI(endpoint, apiKey, merchantId, publicIp);

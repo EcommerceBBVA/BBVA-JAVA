@@ -50,7 +50,7 @@ public class MerchantChargesTest extends BaseTest {
     public void setUp() throws Exception {
 
         String merchantId = "mptdggroasfcmqs8plpy";
-        String apiKey = "***REMOVED***";
+        String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
         String endpoint = "https://sand-api.ecommercebbva.com/"; //*/
         String publicIp = "138.84.62.109";
         this.api = new BbvaAPI(endpoint, apiKey, merchantId, publicIp);
