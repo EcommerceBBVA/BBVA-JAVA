@@ -35,7 +35,7 @@ public class ReadmeExamples {
     @Test
     public void testReadmeExamples() throws Exception {
         String merchantId = "mptdggroasfcmqs8plpy";
-        String apiKey = "sk_326c6d0443f6457aae29ffbd48f7d1be";
+        String apiKey = "sk_xxxxxxxxxxxxxxxxxxxxxxxxx";
         String orderId = String.valueOf(System.currentTimeMillis());
         String publicIp = "138.84.62.109";
         // #### Starting the API ####
