@@ -21,7 +21,7 @@ public class TestConstans {
 
     public static final String MERCHANT_ID = "mptdggroasfcmqs8plpy";
 
-    public static final String API_KEY = "sk_326c6d0443f6457aae29ffbd48f7d1be";
+    public static final String API_KEY = "sk_xxxxxxxxxxxxxxxxxxxxxxxxx";
     public static final String PUBLIC_IP = "138.84.62.109";
 
     public static final String CUSTOMER_ID = "alqrigidmw9jlgngwlrj";
